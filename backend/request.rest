@@ -1,0 +1,48 @@
+GET http://localhost:4000/offices
+
+###
+GET http://localhost:4000/offices/650ed9af07038488e9b6b0ae
+
+###
+
+POST  http://localhost:4000/office
+
+Content-Type: application/json
+  {
+  "title": "Gedung Arjuna Test 2",
+  "address": "Jl. Simpang Ijen No.2, Oro-oro Dowo, Kec. Klojen, Kota Malang, Jawa Timur 65119",
+  "photos": [
+    "photo1695474240783.jpg",
+    "photo1695474256711.jpg",
+    "photo1695474268501.jpg",
+    "photo1695474278490.jpg",
+    "photo1695474330588.jpg"
+  ],
+  "description": "Sumberkima adalah desa tepi laut di sebelah Pemuteran yang dekat dengan Pulau Menjangan, surga menyelam dan menyelam. Tempat ini memiliki pemandangan yang beragam dan budaya asli yang kaya akan tradisi. Di sini Anda benar - benar bisa bersantai jauh dari hiruk pikuk selatan. Resor ini memiliki pemandangan panorama perbukitan, teluk Sumberkima, dan gunung berapi di Jawa. Kami memiliki dua restoran di tempat peristirahatan, yang menyajikan masakan lokal dan internasional. Tim resepsionis kami bisa mengatur semua wisata, sesi yoga, dan perawatan spa Anda.\nTempat\nVilla Naga adalah vila megah 3 kamar tidur yang menghadap gunung berapi Jawa dan Taman Nasional Jawa Barat. Terletak di antara dua keajaiban alam ini, Villa Naga, yang berarti naga adalah pengingat posisi kita di alam semesta. Semua kehidupan terjadi dalam sekejap...jadi mengapa menghabiskannya di tempat lain, ketika Anda bisa berada di vila cantik di Bali, dikelilingi oleh orang yang Anda cintai dan menikmati pemandangan untuk mati?\nKolam renang infinity dilengkapi dengan lounge yang menjadi tempat matahari terbenam terbaik. Ada beranda besar di bawah vila dengan tempat tidur ayun, yang menawarkan tempat tak berujung untuk beristirahat dan ber - ruminasi tentang pembelajaran dan pemandangan hari itu. Nikmati keterbukaan, angin sepoi - sepoi dan udara hangat Sumberkima dari tempat tinggal surgawi Anda!\nKamar Tidur 1: satu tempat tidur double\nKamar Tidur 2: dua tempat tidur single\nKamar tidur 3: satu tempat tidur double (sisi lain kolam renang)\nAkses tamu\nVilla Naga memiliki kolam renang pribadi yang indah dengan pemandangan matahari terbenam yang menakjubkan. Ada kolam renang infinity sepanjang 30 meter di atas area resepsionis yang juga bisa Anda lihat. Atau kolam renang bersama di bagian selatan tempat peristirahatan. Anda bisa mencapainya setelah berjalan kaki 10 menit ke atas bukit. Ini adalah kolam renang Lingga, dengan pemandangan matahari terbenam yang spektakuler di balik gunung berapi Jawa.\n\nKami memiliki dua restoran di tempat peristirahatan untuk sarapan, makan siang dan makan malam, dan restoran Suma Senja. Restoran Suma menawarkan makanan fusion dan memiliki pemandangan panorama yang menghadap perbukitan dan teluk Sumberkima. Senja Restaurant adalah restoran Indonesia kami dengan pemandangan matahari terbenam berwarna - warni di belakang gunung berapi Jawa, menghadap Taman Nasional Barat. Anda juga bisa memesan layanan kamar dari menu khusus dan menikmati makanan Anda di privasi vila Anda sendiri.\n\nKami memiliki paviliun yoga serta guru di lokasi. Paviliun Yoga memiliki pemandangan sempurna laut Bali biru yang berkilauan. Kami juga menawarkan pijat dan perawatan kecantikan tradisional dan penyembuhan di spa kami.\n\nKami menyediakan layanan penatu.\n\nKami memiliki instruktur menyelam, yang juga terlibat dalam proyek pemulihan terumbu karang kami Metamorfosa dan merupakan pakar dalam pemandangan bawah air setempat dan bisa datang ke vila Anda untuk mendiskusikan keinginan menyelam Anda.\n\n",
+  "perks": [
+    "kursi",
+    "meja",
+    "sound system",
+    "wifi",
+    "parking"
+  ],
+  "extraInfo": "Kami memiliki shuttle bus gratis yang mengantar Anda berkeliling retret dan membawa Anda ke pelabuhan Bangsal dari tempat Anda bisa mulai menjelajahi proyek restorasi terumbu karang bawah laut Metamorfosa dan dari tempat perahu pergi ke Pulau Menjangan.\n\nKami memiliki layanan taksi yang tersedia untuk membawa Anda ke pantai di Pemuteran dengan biaya Rp50.000/jalan.\nHal lain yang perlu diperhatikan\nSetiap vila memiliki ponsel untuk memudahkan menghubungi resepsionis, misalnya untuk mengatur perjalanan, membuat janji temu spa atau pijat, memesan layanan antar - jemput gratis, atau menghubungi kedua restoran. Anda bisa menemukan buku tamu di setiap vila yang berisi daftar lengkap aktivitas yang bisa dilakukan di area ini dan juga menyebutkan nomor manajer umum kami untuk keadaan darurat.\n\nUntuk pengeluaran yang dilakukan di villa, Anda dapat membayar tunai atau melalui mesin kartu kredit kami yang cocok untuk kartu master dan visa. Harap dicatat ada biaya tambahan 2% jika Anda membayar melalui kartu kredit",
+  "checkIn": 0,
+  "checkOut": 0,
+  "maxGuest": 20,
+  "price": 1000000
+}
+
+
+###
+DELETE   http://localhost:4000/office/653124337003215496e67fe3
+###
+
+
+
+POST  http://localhost:4000/register
+{
+  "name": "AlbasTom",
+  "email": "albastom@gmail.com",
+  "password":"12345"
+}
