@@ -4,18 +4,27 @@ import { BiSliderAlt, BiUserCircle } from "react-icons/bi";
 import MobileMenu from "./MobileMenu";
 import CenterNavbar from "./CenterNavbar";
 import { UserContext } from "../UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import ModalAlertLogout from "./ModalAlertLogout";
 
 const Navbar = () => {
   const [isActived, setIsActived] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  console.log(user);
+
+  const handleLogout = async () => {
+    await axios.post("/logout");
+    navigate("/");
+    setUser(null);
+  };
   return (
     <>
-      <div className="navbar px-4 bg-base-100">
+      <div className="navbar border-b shadow-sm border-gray-200 px-4 bg-base-100">
         <div className="navbar-start ">
-          <img src={LogoSewaKawis} alt="logo" className="w-12 m-2" />
+          <Link to={"/"}>
+            <img src={LogoSewaKawis} alt="logo" className="w-12 m-2" />
+          </Link>
         </div>
         <div className="navbar-center hidden md:flex">
           <CenterNavbar />
@@ -62,7 +71,11 @@ const Navbar = () => {
               <li>
                 <a>Pusat Bantuan</a>
               </li>
-              <li>
+              <li
+                onClick={() =>
+                  document.getElementById("my_modal_alertLogout").showModal()
+                }
+              >
                 <a>Keluar</a>
               </li>
             </ul>
@@ -79,6 +92,7 @@ const Navbar = () => {
       </div>
       <MobileMenu setIsActived={setIsActived} isActived={isActived} />
       <hr className="hidden md:block" />
+      <ModalAlertLogout handleLogout={handleLogout} />
     </>
   );
 };

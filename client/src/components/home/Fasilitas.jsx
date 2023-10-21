@@ -15,37 +15,37 @@ const Fasilitas = () => {
       <div className=" items-center  md:shadow-none flex md:w-1/2 ">
         <div className="overflow-x-scroll text-gray-500 scrollbar-hide scroll-smooth py-3 rounded-xl  items-center flex gap-6">
           <span className="text-2xl">|</span>
-          <div className="carousel-item  border-b-2 hover:border-black border-white duration-200   flex justify-center items-center flex-col">
+          <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200   flex justify-center items-center flex-col">
             <AiFillBank className="text-4xl" />
             Gedung Bersih
           </div>
-          <div className="carousel-item border-b-2 hover:border-black border-white duration-200 flex justify-center items-center flex-col">
+          <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200 flex justify-center items-center flex-col">
             <MdOutlineChair className="text-4xl" />
             <p>Kursi Rapat</p>
           </div>
-          <div className="carousel-item border-b-2 hover:border-black border-white duration-200  flex justify-center items-center flex-col">
+          <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200  flex justify-center items-center flex-col">
             {" "}
             <RiSurroundSoundLine className="text-4xl" />
             <p>Sound System</p>
           </div>
-          <div className="carousel-item border-b-2 hover:border-black border-white duration-200  flex justify-center items-center flex-col">
+          <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200  flex justify-center items-center flex-col">
             {" "}
             <PiToiletDuotone className="text-4xl" />
             <p>Toilet Bersih</p>
           </div>
-          <div className="carousel-item border-b-2 hover:border-black border-white duration-200  justify-center items-center flex flex-col">
+          <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200  justify-center items-center flex flex-col">
             <TbAirConditioning className="text-4xl" />
             <p>AC</p>
           </div>
-          <div className="carousel-item border-b-2 hover:border-black border-white duration-200  justify-center items-center  flex flex-col">
+          <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200  justify-center items-center  flex flex-col">
             <FaPeopleCarry className="text-4xl" />
             <p>Petugas Kebersihan</p>
           </div>
-          <div className="carousel-item border-b-2 hover:border-black border-white duration-200  justify-center items-center  flex flex-col">
+          <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200  justify-center items-center  flex flex-col">
             <FaPeoplePulling className="text-4xl" />
             <p>Petugas Keamanan</p>
           </div>
-          <div className="carousel-item border-b-2 hover:border-black border-white duration-200   justify-center  items-center  flex flex-col">
+          <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200   justify-center  items-center  flex flex-col">
             <GiPowerGenerator className="text-4xl" />
             <p>Genset</p>
           </div>

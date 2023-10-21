@@ -1,6 +1,7 @@
 import React from "react";
 import Fasilitas from "../components/home/Fasilitas";
 import SecondMenuHome from "../components/home/SecondMenuHome";
+import ListOffices from "../components/home/ListOffices";
 
 const Home = () => {
   return (
@@ -9,6 +10,8 @@ const Home = () => {
         <SecondMenuHome />
         <Fasilitas />
       </div>
+
+      <ListOffices />
     </>
   );
 };

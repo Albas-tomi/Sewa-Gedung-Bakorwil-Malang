@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const MobileMenu = ({ setIsActived, isActived }) => {
@@ -20,26 +21,31 @@ const MobileMenu = ({ setIsActived, isActived }) => {
           <div className=" flex  flex-col">
             <div className="flex mb-16 flex-col gap-2">
               <div className="border-b hover:font-bold duration-200 py-2 ">
-                <p className="text-xl ml-7">Beranda</p>
+                <p className="text-xl ml-7 cursor-pointer">Beranda</p>
               </div>
               <div className="border-b py-2 hover:font-bold duration-200 ">
-                <p className="text-xl ml-7">Pesanan Saya</p>
+                <p className="text-xl ml-7 cursor-pointer">Pesanan Saya</p>
               </div>
               <div className="border-b py-2 hover:font-bold duration-200 ">
-                <p className="text-xl ml-7">Tentang Kami</p>
+                <p className="text-xl ml-7 cursor-pointer">Tentang Kami</p>
               </div>
               <div className="border-b py-2 hover:font-bold duration-200 ">
-                <p className="text-xl ml-7">Kontak Kami</p>
+                <p className="text-xl ml-7 cursor-pointer">Kontak Kami</p>
               </div>
               <div className="border-b py-2 hover:font-bold duration-200 ">
-                <p className="text-xl ml-7">Akun</p>
+                <p className="text-xl ml-7 cursor-pointer">Akun </p>
               </div>
               <div className="border-b py-2 hover:font-bold duration-200 ">
-                <p className="text-xl ml-7">Pusat Bantuan</p>
+                <p className="text-xl ml-7 cursor-pointer">Pusat Bantuan</p>
               </div>
             </div>
-            <div className="border-b py-2 hover:font-bold duration-200 ">
-              <p className="text-xl ml-7">Keluar</p>
+            <div
+              onClick={() =>
+                document.getElementById("my_modal_alertLogout").showModal()
+              }
+              className="border-b py-2 hover:font-bold duration-200 "
+            >
+              <p className="text-xl ml-7 cursor-pointer">Keluar</p>
             </div>
           </div>
         </div>

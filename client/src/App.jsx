@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import UserContextProvider from "./components/UserContext";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
-
+import TodoList from "./todoList/TodoList";
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
@@ -15,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="/todo" element={<TodoList />} />
           <Route path="/login" element={<LoginPage />} />
         </Route>
       </Routes>
