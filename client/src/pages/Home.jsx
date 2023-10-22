@@ -10,7 +10,6 @@ const Home = () => {
         <SecondMenuHome />
         <Fasilitas />
       </div>
-
       <ListOffices />
     </>
   );

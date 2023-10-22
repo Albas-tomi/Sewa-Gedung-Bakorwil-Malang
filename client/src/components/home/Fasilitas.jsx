@@ -12,7 +12,7 @@ import { TbAirConditioning } from "react-icons/tb";
 const Fasilitas = () => {
   return (
     <>
-      <div className=" items-center  md:shadow-none flex md:w-1/2 ">
+      <marquee className=" items-center  md:shadow-none flex md:w-1/2 ">
         <div className="overflow-x-scroll text-gray-500 scrollbar-hide scroll-smooth py-3 rounded-xl  items-center flex gap-6">
           <span className="text-2xl">|</span>
           <div className="carousel-item border-b-2 cursor-pointer hover:border-black border-white duration-200   flex justify-center items-center flex-col">
@@ -51,7 +51,7 @@ const Fasilitas = () => {
           </div>
           <span className="text-2xl">|</span>
         </div>
-      </div>
+      </marquee>
     </>
   );
 };

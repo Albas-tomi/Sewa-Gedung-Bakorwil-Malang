@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.get("/offices", getOffices);
-router.get("/offices/:id", getOfficesById);
+router.get("/office/:id", getOfficesById);
 router.post("/office", addOffice);
 router.patch("/office/:id", editOffice);
 router.delete("/office/:id", deleteOffice);

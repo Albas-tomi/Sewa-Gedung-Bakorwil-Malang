@@ -6,6 +6,7 @@ import UserContextProvider from "./components/UserContext";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
 import TodoList from "./todoList/TodoList";
+import DetailOffice from "./pages/DetailOffice";
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
@@ -15,8 +16,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/todo" element={<TodoList />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/todo" element={<TodoList />} />
+          <Route path="/office/:id" element={<DetailOffice />} />
         </Route>
       </Routes>
     </UserContextProvider>
