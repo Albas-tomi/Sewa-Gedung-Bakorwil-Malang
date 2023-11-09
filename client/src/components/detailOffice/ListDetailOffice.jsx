@@ -3,14 +3,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookingWidget from "./BookingWidget";
 import GalleryOffice from "./GalleryOffice";
+import { useDispatch } from "react-redux";
+import { retrieveOfficeById } from "../../config/BookingOffice/officesThunk";
+import { useOfficesByIDSelector } from "../../config/BookingOffice/officesSelector";
 
 const ListDetailOffice = () => {
-  const [office, setOffice] = useState(null);
   const { id } = useParams();
+  const office = useOfficesByIDSelector();
+  const dispatch = useDispatch();
   useEffect(() => {
-    axios.get(`office/${id}`).then((res) => {
-      setOffice(res.data);
-    });
+    if (id) {
+      dispatch(retrieveOfficeById(id));
+    }
   }, [id]);
 
   if (!office) return "";

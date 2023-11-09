@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.disabled-time {
+  background-color: #ccc; /* Ubah warna latar belakang ke abu-abu (sesuaikan sesuai keinginan Anda) */
+  color: #888; /* Ubah warna teks menjadi abu-abu muda (sesuaikan sesuai keinginan Anda) */
+  cursor: not-allowed; /* Ubah ikon kursor saat digulir ke "not-allowed" */
+}

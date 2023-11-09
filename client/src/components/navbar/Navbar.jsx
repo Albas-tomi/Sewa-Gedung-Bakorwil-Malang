@@ -52,9 +52,9 @@ const Navbar = () => {
               </svg>
 
               {user ? (
-                <span className="py-1 px-2 rounded-full bg-black text-xs text-white">
-                  {user?.name[0]}
-                </span>
+                <div className="py-1 px-2 rounded-full bg-black text-xs text-white">
+                  {!!user.name && <p>{user.name}</p>}
+                </div>
               ) : (
                 <span className="rounded-full p-2  bg-black text-white">
                   <BiUserCircle className="text-xl" />

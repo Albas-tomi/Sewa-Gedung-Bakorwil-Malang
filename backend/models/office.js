@@ -14,4 +14,4 @@ const Office = new mongoose.Schema({
   price: Number,
 });
 
-export default mongoose.model("Offices", Office);
+export default mongoose.model("Office", Office);

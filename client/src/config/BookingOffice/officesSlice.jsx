@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { retrieveOffices } from "./officesThunk";
+import { retrieveOfficeById, retrieveOffices } from "./officesThunk";
 
 const initialState = {
   offices: [],
   officesLoading: false,
   officeError: undefined,
+  //# region ByID
+  officeById: [],
+  officeByIdLoading: false,
+  officeByIdError: undefined,
+  //#end region ByID
 };
 const officesSlice = createSlice({
   name: "Office",
@@ -12,6 +17,32 @@ const officesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      //#region get OFFICEID
+      .addCase(retrieveOfficeById.pending, (state, action) => {
+        return {
+          ...state,
+          officeByIdLoading: true,
+          officeByIdError: undefined,
+        };
+      })
+      .addCase(retrieveOfficeById.fulfilled, (state, action) => {
+        return {
+          ...state,
+          officeById: action.payload,
+          officeByIdLoading: false,
+          officeByIdError: undefined,
+        };
+      })
+      .addCase(retrieveOfficeById.rejected, (state, action) => {
+        return {
+          ...state,
+          officeByIdLoading: false,
+          officeByIdError: action.payload,
+        };
+      })
+      //#END region get OFFICEID
+
+      //#region get OFFICEID
       .addCase(retrieveOffices.pending, (state, action) => {
         return {
           ...state,
@@ -34,6 +65,7 @@ const officesSlice = createSlice({
           officeError: action.payload,
         };
       });
+    //#END region get OFFICEID
   },
 });
 

@@ -32,7 +32,7 @@ export const loginUser = async (req, res) => {
           {},
           (error, token) => {
             if (error) throw error;
-            res.cookie("token", token).json(userDoc);
+            res.cookie("token", token).json(token);
           }
         );
       } else {

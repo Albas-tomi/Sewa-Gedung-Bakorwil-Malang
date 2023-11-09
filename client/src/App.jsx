@@ -7,6 +7,8 @@ import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
 import TodoList from "./todoList/TodoList";
 import DetailOffice from "./pages/DetailOffice";
+import MyBooking from "./pages/MyBooking";
+import DetailBooking from "./pages/DetailBooking";
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
@@ -18,6 +20,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/todo" element={<TodoList />} />
+          <Route path="/mybooking" element={<MyBooking />} />
+          <Route path="/mybooking/:id" element={<DetailBooking />} />
           <Route path="/office/:id" element={<DetailOffice />} />
         </Route>
       </Routes>

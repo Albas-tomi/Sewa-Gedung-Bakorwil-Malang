@@ -4,14 +4,14 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const MobileMenu = ({ setIsActived, isActived }) => {
   return (
-    <div>
+    <div className="z-50 ">
       <div
         onClick={() => setIsActived(false)}
         className={`${
           isActived
-            ? "h-screen inset-0 top-2 bg-white transition-transform duration-300 ease-in transform rounded-xl translate-y-0"
+            ? "h-screen inset-0   bg-white transition-transform duration-300 ease-in transform rounded-xl translate-y-0"
             : "h-screen inset-0 top-0 transition-transform duration-300 ease-out transform -translate-y-full"
-        } md:hidden absolute bg-white rounded-lg`}
+        } md:hidden  fixed bg-white rounded-lg`}
         tabIndex={0}
       >
         <div className=" bg-none p-3 text-3xl">

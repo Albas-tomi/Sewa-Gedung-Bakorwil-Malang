@@ -5,13 +5,21 @@ import { v4 as uuidv4 } from "uuid";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 import { formatRupiah } from "../../rpFormatter";
 import { useFormik } from "formik";
-import { DateRange, DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // t
+import { useDispatch } from "react-redux";
+import {
+  createBooking,
+  retrieveBooking,
+} from "../../config/Booked/bookingThunk";
+import { useBookingSelector } from "../../config/Booked/bookingSelector";
+import { getWeekDay } from "../../getWeekDay";
+import { format } from "date-fns";
+import ModalBooking from "./ModalBooking";
 
 const BookingWidget = ({ office }) => {
   const { user } = useContext(UserContext);
-  const [dataBooked, setDataBooked] = useState([]);
   const [dayBooked, setDayBooked] = useState([
     {
       startDate: new Date(),
@@ -19,13 +27,13 @@ const BookingWidget = ({ office }) => {
       key: "selection",
     },
   ]);
+  const dataBooked = useBookingSelector();
   const [booking, setBooking] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
   useEffect(() => {
-    // axios.get("/bookingoffice").then(({ data }) => {
-    //   setDataBooked(data);
-    // });
+    dispatch(retrieveBooking());
   }, []);
   let amountDayBooked = 0;
 
@@ -42,12 +50,14 @@ const BookingWidget = ({ office }) => {
     },
     onSubmit: async (values, { resetForm }) => {
       if (user) {
-        console.log(values);
-        // values.price = amountDayBooked * office.price;
-        // values.checkIn = new Date(dayBooked[0].startDate);
-        // values.checkOut = new Date(dayBooked[0].endDate);
-        // document.getElementById("modal_payment").showModal();
-        // setBooking(values);
+        values.price = amountDayBooked * office.price;
+        values.checkIn = new Date(dayBooked[0].startDate);
+        values.checkOut = new Date(dayBooked[0].endDate);
+        values.office = office._id;
+        if (values.phone && values.fullName && values.fullName !== "") {
+          setBooking(values);
+          document.getElementById("modal_payment").showModal();
+        }
       } else {
         navigate("/login");
       }
@@ -73,6 +83,37 @@ const BookingWidget = ({ office }) => {
   //  ====== REGION CHECK JUMLAH HARI BOOKING ======
 
   //  ====== REGION DISABLE DATE ======
+  // Dapatkan Data Hari Senin - Jumat
+  const dayWeek = getWeekDay(2);
+  //  =========== GET DATE BOOKED
+  const checkInCheckOutDates = dataBooked
+    .filter((data) => data.office === id)
+    .map((item) => ({
+      checkIn: format(new Date(item.checkIn), "yyyy-MM-dd"), // Ubah format checkIn
+      checkOut: format(new Date(item.checkOut), "yyyy-MM-dd"), //
+    }));
+
+  // Convert the checkIn and checkOut dates to Date objects
+  const checkInDate = checkInCheckOutDates.map(
+    (date) => new Date(date.checkIn)
+  );
+
+  const checkOutDate = checkInCheckOutDates.map(
+    (date) => new Date(date.checkOut)
+  );
+
+  const disabledDates = [...dayWeek];
+  // AMBIL SEMUA TANGGAL CHECKIN
+  for (let i = 0; i < checkInDate.length; i++) {
+    let currentDate = new Date(checkInDate[i]);
+
+    // CEK RANGE DATE CHECKIN DAN CHECKOUT
+    while (currentDate <= checkOutDate[i]) {
+      disabledDates.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  }
+
   //  ====== REGION DISABLE DATE ======
   return (
     <div className="bg-white mt-2  shadow p-4 rounded-2xl">
@@ -88,7 +129,7 @@ const BookingWidget = ({ office }) => {
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               months={1}
-              //   disabledDates={disabledDates}
+              disabledDates={disabledDates}
               ranges={dayBooked}
               direction="horizontal"
             />
@@ -142,7 +183,7 @@ const BookingWidget = ({ office }) => {
           )}
         </button>
       </form>
-      {/* <ModalFormPayment booking={booking} /> */}
+      <ModalBooking booking={booking} />
     </div>
   );
 };

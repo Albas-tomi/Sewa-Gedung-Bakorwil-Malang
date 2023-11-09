@@ -1,5 +1,5 @@
 import React from "react";
-import LogoutLogo from "../../assets/img/LogoutButtonConfirm.png";
+import { IoLogOut } from "react-icons/io5";
 const ModalAlertLogout = ({ handleLogout }) => {
   return (
     <div>
@@ -7,12 +7,12 @@ const ModalAlertLogout = ({ handleLogout }) => {
         <div className="modal-box p-6">
           <div className="flex flex-col  justify-center gap-3 items-center">
             <h3 className="font-bold text-lg ">
-              Apakah Anda yakin mau keluar ?
+              Apakah Anda yakin ingin keluar ?
             </h3>
-            <img src={LogoutLogo} alt="logo" className="w-44" />
+            <IoLogOut className="text-9xl text-blue-600" />
           </div>
           <div className="modal-action">
-            <div className="flex justify-between px-3  w-full">
+            <div className="flex justify-center gap-3 px-3  w-full">
               <button
                 onClick={() =>
                   document.getElementById("my_modal_alertLogout").close()
@@ -27,7 +27,7 @@ const ModalAlertLogout = ({ handleLogout }) => {
                   alert("berhasil keluar");
                   document.getElementById("my_modal_alertLogout").close();
                 }}
-                className="btn w-32 bg-blue-800 text-white "
+                className="btn w-32 bg-blue-600 text-white "
               >
                 Lanjutkan
               </button>

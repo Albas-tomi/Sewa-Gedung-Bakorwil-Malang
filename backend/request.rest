@@ -1,7 +1,7 @@
 GET http://localhost:4000/offices
 
 ###
-GET http://localhost:4000/offices/650ed9af07038488e9b6b0ae
+GET http://localhost:4000/office/650ed9af07038488e9b6b0ae
 
 ###
 
