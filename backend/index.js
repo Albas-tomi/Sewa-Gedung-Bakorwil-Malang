@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import { fileURLToPath } from "url";
@@ -9,6 +8,8 @@ import dotenv from "dotenv";
 import OfficeRoute from "./routes/officeRoute.js";
 import UserRoute from "./routes/userRoute.js";
 import BookingRoute from "./routes/bookingRoute.js";
+import ConfirmMail from "./routes/confirmMailRoute.js";
+import AdminUserRoute from "./routes/adminUserRoute.js";
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 
@@ -34,13 +35,15 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
   })
 );
 
 app.use(OfficeRoute);
 app.use(UserRoute);
 app.use(BookingRoute);
+app.use(ConfirmMail);
+app.use(AdminUserRoute);
 
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT} `);

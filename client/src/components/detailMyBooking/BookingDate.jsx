@@ -17,9 +17,9 @@ const BookingDate = ({ data }) => {
         {longDayBooked}
         Hari
         <BsCalendar3 />
-        {format(new Date(data.checkIn), "yyyy-MM-dd")} <BiSolidArrowFromLeft />
+        {/* {format(new Date(data.checkIn), "yyyy-MM-dd")} <BiSolidArrowFromLeft />
         <BsCalendar3 />
-        {format(new Date(data.checkOut), "yyyy-MM-dd")}
+        {format(new Date(data.checkOut), "yyyy-MM-dd")} */}
       </div>
     </div>
   );

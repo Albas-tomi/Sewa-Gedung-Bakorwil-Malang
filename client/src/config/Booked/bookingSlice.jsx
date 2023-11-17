@@ -72,7 +72,7 @@ const bookingSlice = createSlice({
       .addCase(retrieveBooking.fulfilled, (state, action) => {
         return {
           ...state,
-          booking: action.payload,
+          bookings: action.payload,
           bookingsLoading: false,
           bookingsError: undefined,
           typeAction: action.type,

@@ -10,7 +10,6 @@ import dayjs from "dayjs";
 const DetailBooking = () => {
   const { id } = useParams();
   const [booking, setBooking] = useState(null);
-  const [dataPayment, setDataPayment] = useState([]);
   useEffect(() => {
     if (id) {
       axios.get("/mybooking").then((response) => {
@@ -21,17 +20,8 @@ const DetailBooking = () => {
           setBooking(findMyBooking);
         }
       });
-      axios.get("/payment").then((res) => {
-        setDataPayment(res.data);
-      });
     }
   }, [id]);
-
-  const statusPayment = dataPayment.find(
-    (paymentData) => paymentData?.order_id === booking?.order_id
-  );
-
-  console.log(statusPayment);
 
   if (!booking) {
     return "";
@@ -66,20 +56,10 @@ const DetailBooking = () => {
                   <p className="border-r pr-5 border-gray-500  my-1">
                     Metode Pembayaran{" "}
                   </p>
-                  <strong className="ml-2 md:ml-14">
-                    {statusPayment.payment_type}
-                  </strong>
                 </div>
                 <div className="grid grid-cols-2  ">
                   <p className="border-r pr-5 border-gray-500  my-1">
                     Tanggal Pembayaran
-                  </p>
-                  <p className="ml-2 md:ml-14">
-                    <strong>
-                      {dayjs(statusPayment.transaction_time).format(
-                        "DD/MM/YYYY"
-                      )}
-                    </strong>
                   </p>
                 </div>
               </div>

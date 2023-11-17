@@ -2,9 +2,10 @@ import React from "react";
 import { TbBrandBooking } from "react-icons/tb";
 import { GrNext } from "react-icons/gr";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const HeaderBookings = () => {
+  const { id } = useParams();
   return (
     <div className="flex shadow-sm bg-white p-3 rounded-lg justify-between">
       <div>
@@ -15,9 +16,13 @@ const HeaderBookings = () => {
         <GrNext className="text-sm" />
         <span className="text-gray-600">Bookings</span>
         <button
-          onClick={() =>
-            document.getElementById("my_modal_formInput").showModal()
-          }
+          onClick={() => {
+            if (id === "65534727b0b193dc7e590891") {
+              document.getElementById("my_modal_formInputArjuna").showModal();
+            } else {
+              document.getElementById("my_modal_formInput").showModal();
+            }
+          }}
         >
           <HiOutlineViewGridAdd className="text-3xl duration-300 hover:text-blue-700" />
         </button>

@@ -11,7 +11,7 @@ const ListOffices = () => {
     dispatch(retrieveOffices());
   }, []);
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2  gap-x-4 gap-y-8 mt-4 px-3 ">
+    <div className="grid grid-cols-2 md:grid-cols-3  gap-x-4 gap-y-8 mt-4 px-3 ">
       {offices.length > 0 &&
         offices.map((data) => (
           <Link key={data._id} to={"/office/" + data._id}>
@@ -19,8 +19,8 @@ const ListOffices = () => {
               <div className="bg-gray-200 rounded-2xl flex">
                 <img
                   className="rounded-2xl  mb-2 aspect-square object-cover"
-                  src="https://a0.muscache.com/im/pictures/miso/Hosting-824015985248619464/original/a0e90c4a-83d8-4392-8302-4cc24d2eebe2.jpeg?im_w=1200"
-                  alt=""
+                  src={"http://localhost:4000/uploads/office/" + data.photos[0]}
+                  alt="office"
                 />
               </div>
               <h3 className=" font-bold">{data.address}</h3>

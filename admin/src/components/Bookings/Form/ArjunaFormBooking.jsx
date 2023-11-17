@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactCalendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { v4 as uuidv4 } from "uuid";
 import { useFormik } from "formik";
-import axios from "axios";
-import KtpUploader from "./KtpUploader";
-import TimesPerDay from "./TimesPerDay";
-import SuratPermohonanUploader from "./SuratPermohonanUploader";
-import PosterUploader from "./PosterUploader";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createdBooking } from "../../config/booking/bookingThunk";
+import { createdBooking } from "../../../config/booking/bookingThunk";
+import TimesPerDay from "../TimesPerDay";
 
-const FormBooking = ({ bookingData, idSelected }) => {
+const ArjunaFormBooking = ({ bookingData }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const dataBooked = bookingData.filter((data) => data.office === id);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedStartTime, setSelectedStartTime] = useState(null);
   const [selectedEndTime, setSelectedEndTime] = useState(null);
-  const [photoKtp, setPhotoKtp] = useState([]);
-  const [suratPermohonan, setSuratPermohonan] = useState([]);
-  const [poster, setPoster] = useState([]);
 
   const handleGetDate = (date) => {
     setSelectedDate(date);
@@ -34,44 +27,35 @@ const FormBooking = ({ bookingData, idSelected }) => {
       namaKegiatan: "",
       jumlahPeserta: "",
       penanggungjawab: "",
-      latarBelakang: "",
       tujuanKegiatan: "",
-      sasaranKegiatan: "",
       lembaga: "",
       alamatLembaga: "",
-      KTPUser: "",
-      suratPermohonan: "",
-      posterKegiatan: "",
       dateTime: "",
       startTime: "",
       endTime: "",
       phone: "",
       price: 0,
+      statusDiterima: true,
       order_id: `order_${uuidv4()}`,
     },
     onSubmit: async (values, { resetForm }) => {
       values.office = id;
-      values.KTPUser = photoKtp;
       values.dateTime = selectedDate;
       values.startTime = selectedStartTime;
       values.endTime = selectedEndTime;
-      values.suratPermohonan = suratPermohonan;
-      values.posterKegiatan = poster;
+
       dispatch(createdBooking(values));
-      document.getElementById("my_modal_formInput").close();
+      document.getElementById("my_modal_formInputArjuna").close();
       setSelectedStartTime(null);
       setSelectedEndTime(null);
       setSelectedDate(new Date());
-      setPhotoKtp([]);
-      setPoster([]);
-      setSuratPermohonan([]);
       resetForm();
     },
   });
 
   return (
     <div>
-      <dialog id="my_modal_formInput" className="modal bg-black/50">
+      <dialog id="my_modal_formInputArjuna" className="modal bg-black/50">
         <div className="modal-box w-2/3 bg-gray-200 max-w-7xl overscroll-none">
           <h3 className="font-bold text-lg">Form Data Booking</h3>
           <form onSubmit={formik.handleSubmit}>
@@ -116,7 +100,7 @@ const FormBooking = ({ bookingData, idSelected }) => {
                       onChange={formik.handleChange}
                       value={formik.values.jumlahPeserta}
                       min={5}
-                      placeholder="Jumlah Peserta"
+                      placeholder="Jumlah Undangan"
                       className="input my-2 input-bordered input-sm w-full "
                     />
                   </div>
@@ -130,15 +114,7 @@ const FormBooking = ({ bookingData, idSelected }) => {
                     placeholder="Nama Penanggung Jawab"
                     className="input my-2 input-bordered input-sm w-full "
                   />
-                  <input
-                    name="latarBelakang"
-                    id="latarBelakang"
-                    onChange={formik.handleChange}
-                    value={formik.values.latarBelakang}
-                    type="text"
-                    placeholder="Latar Belakang Kegiatan"
-                    className="input input-bordered my-2 input-sm w-full "
-                  />
+
                   <input
                     name="tujuanKegiatan"
                     id="tujuanKegiatan"
@@ -149,16 +125,6 @@ const FormBooking = ({ bookingData, idSelected }) => {
                     className="input input-bordered my-2 input-sm w-full "
                   />
                   <input
-                    name="sasaranKegiatan"
-                    id="sasaranKegiatan"
-                    onChange={formik.handleChange}
-                    value={formik.values.sasaranKegiatan}
-                    type="text"
-                    placeholder="Sasaran/Peserta Kegiatan"
-                    className="input my-2 input-bordered input-sm w-full "
-                  />
-
-                  <input
                     name="lembaga"
                     id="lembaga"
                     onChange={formik.handleChange}
@@ -167,36 +133,15 @@ const FormBooking = ({ bookingData, idSelected }) => {
                     placeholder="Instansi/Lembaga/Komunitas"
                     className="input my-2 input-bordered input-sm w-full "
                   />
+
                   <textarea
                     name="alamatLembaga"
                     id="alamatLembaga"
                     onChange={formik.handleChange}
                     value={formik.values.alamatLembaga}
-                    placeholder="Alamat Instansi/Lembaga/Komunitas"
+                    placeholder="Alamat Penanggung Jawab"
                     className="textarea textarea-bordered textarea-sm w-full max-w-xs"
                   ></textarea>
-                  {/* KTP UPLOADER */}
-                  <KtpUploader
-                    formik={formik}
-                    setPhotoKtp={setPhotoKtp}
-                    photoKtp={photoKtp}
-                  />
-                  {/* KTP UPLOADER */}
-                  {/* SURAT PERMOHONAN UPLOADER */}
-                  <SuratPermohonanUploader
-                    suratPermohonan={suratPermohonan}
-                    setSuratPermohonan={setSuratPermohonan}
-                    formik={formik}
-                  />
-                  {/* SURAT PERMOHONAN UPLOADER */}
-
-                  {/* POSTER UPLOADER */}
-                  <PosterUploader
-                    poster={poster}
-                    setPoster={setPoster}
-                    formik={formik}
-                  />
-                  {/* POSTER UPLOADER */}
                 </div>
 
                 <button
@@ -219,4 +164,4 @@ const FormBooking = ({ bookingData, idSelected }) => {
   );
 };
 
-export default FormBooking;
+export default ArjunaFormBooking;

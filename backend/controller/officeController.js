@@ -49,47 +49,33 @@ export const deleteOffice = async (req, res) => {
   }
 };
 
-// ========== IMAGE POST =================
-export const uploadsWithLink = async (req, res) => {
-  const { link } = req.body;
-  // ==MEMBEDAKAN NAMA==
-  const newName = "photo" + Date.now() + ".jpg";
+// ====== UPLOAD KTP USER ==========
 
-  await imageDownloader.image({
-    url: link,
-    // Tempat file
-    dest: __dirname + "/uploads" + newName,
-  });
-  res.json(newName);
-};
-
-export const uploadPhotos = (req, res) => {
+export const uploadOfficePhotos = (req, res) => {
   // UPLOAD FILE MEMORY
-  const uploadedFiles = [];
-  // TO GET PATH NAME
+  const uploadedPhotosOffice = [];
   for (let index = 0; index < req.files.length; index++) {
-    const { path, originalname } = req.files[index];
-    // GET LAST OBJECT
-    const parts = originalname.split(".");
-    const ext = parts[parts.length - 1];
-    const newPath = path + "." + ext;
-    fs.renameSync(path, newPath);
-    uploadedFiles.push(newPath.replace("uploads\\", ""));
+    const { filename } = req.files[index];
+    uploadedPhotosOffice.push(filename);
   }
-  res.json(uploadedFiles);
+  res.json(uploadedPhotosOffice);
 };
+// ====== DELETE ==========
 
-// DELETE OFFICE BY NAME
-export const deleteFilePhoto = (req, res) => {
+export const deletePhotoOffice = (req, res) => {
   // MENDAPATKAN DATA FILE
-  const filename = req.params.filename;
-  const filepath = path.join(__dirname, "uploads", filename);
-  fs.unlink(filepath, (err) => {
+  const fileName = req.params.fileName;
+  const filePath = path.join("uploads/office", fileName);
+  console.log(filePath);
+  // Menghapus file dari sistem file
+  fs.unlink(filePath, (err) => {
     if (err) {
-      console.error("ERROR DELETING FILE", err);
-      return res.status(500).json({ message: "FAILED TO DELETE FILE" });
+      console.error("Error deleting file: ", err);
+      return res.status(500).json({ message: "Failed to delete file" });
     }
-    console.log(`File '${filename}' deleted success`);
-    res.status(200).json({ message: "FILE DELETED" });
+    console.log(`File '${fileName}' deleted successfully.`);
+    res.status(200).json({ message: "File deleted successfully" });
   });
 };
+// ====== DELETE ==========
+// ====== UPLOAD KTP USER ==========

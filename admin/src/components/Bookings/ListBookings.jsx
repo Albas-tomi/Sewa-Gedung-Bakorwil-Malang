@@ -5,7 +5,6 @@ import {
   useBookingTypeSelector,
 } from "../../config/booking/bookingUseSelector";
 import { useOfficesSelector } from "../../config/offices/officesSelector";
-import { formatRupiah } from "../../../rpFormatter";
 import { retrieveOffices } from "../../config/offices/officesThunk";
 import {
   createdBooking,
@@ -14,10 +13,13 @@ import {
   retrieveBookingById,
   updateBookingById,
 } from "../../config/booking/bookingThunk";
-import FormBooking from "./FormBooking";
 import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
-import FormEditBooking from "./FormEditBooking";
+import FormBooking from "./Form/FormBooking";
+import FormEditBooking from "./Form/FormEditBooking";
+import ArjunaFormBooking from "./Form/ArjunaFormBooking";
+import ArjunaEditForm from "./Form/ArjunaEditFrom";
+import ConfirmModal from "./ConfirmModal";
 
 const ListBookings = () => {
   const { id } = useParams();
@@ -26,7 +28,7 @@ const ListBookings = () => {
   const officeData = useOfficesSelector();
   const bookingType = useBookingTypeSelector();
   const [idSelected, setIdSelected] = useState(null);
-  const [dataSelected, setDataSelected] = useState({});
+  const [idDiterima, setIdDiterima] = useState(null);
 
   const handleDeleteBooking = useCallback((id) => {
     dispatch(deleteBookingById({ id }));
@@ -40,6 +42,13 @@ const ListBookings = () => {
     dispatch(retrieveBooking());
     dispatch(retrieveOffices());
   }, []);
+
+  useEffect(() => {
+    if (idSelected) {
+      dispatch(retrieveBookingById(idSelected));
+    }
+    return;
+  }, [idSelected]);
 
   useEffect(() => {
     if (bookingType === createdBooking.fulfilled.type) {
@@ -68,7 +77,9 @@ const ListBookings = () => {
             <th>Nama Kegiatan</th>
             <th>Tanggal / Jam</th>
             <th>Tempat</th>
-            <th>Lembaga</th>
+            <th className={id === "65534727b0b193dc7e590891" ? "hidden" : ""}>
+              Lembaga
+            </th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -94,13 +105,42 @@ const ListBookings = () => {
                     .filter((data) => data._id === id)
                     .map((data) => data.title)}
                 </td>
-                <td>{data.lembaga}</td>
-                <td>Terima/Tolak</td>
-                <td className="grid grid-cols-2 gap-2">
+                <td
+                  className={id === "65534727b0b193dc7e590891" ? "hidden" : ""}
+                >
+                  {data.lembaga}
+                </td>
+                <td>
+                  {data.statusDiterima === false ? (
+                    <button
+                      onClick={() => {
+                        setIdDiterima(data._id);
+                        document
+                          .getElementById("konfirmasi_terima")
+                          .showModal();
+                      }}
+                      className="btn btn-outline btn-ghost btn-xs"
+                    >
+                      Terima
+                    </button>
+                  ) : (
+                    "DITERIMA"
+                  )}
+                </td>
+                <td className="flex mt-2 items-center justify-center gap-2">
                   <button
                     onClick={() => {
-                      setIdSelected(data._id);
-                      document.getElementById("my_modal_formEditInput").show();
+                      if (id === "65534727b0b193dc7e590891") {
+                        document
+                          .getElementById("my_modal_formEditArjuna")
+                          .showModal();
+                        setIdSelected(data._id);
+                      } else {
+                        document
+                          .getElementById("my_modal_formEditInput")
+                          .showModal();
+                        setIdSelected(data._id);
+                      }
                     }}
                     className="btn btn-outline btn-warning btn-xs"
                   >
@@ -116,16 +156,18 @@ const ListBookings = () => {
                   <button className="btn btn-outline btn-info btn-xs">
                     Detail
                   </button>
-                  <button className="btn btn-outline btn-ghost btn-xs">
-                    Terima
-                  </button>
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
-      <FormBooking idSelected={idSelected} bookingData={bookingDataArray} />
+      {/* REGION MODAL */}
+      <ConfirmModal idDiterima={idDiterima} setIdDiterima={setIdDiterima} />
+      <FormBooking bookingData={bookingDataArray} />
       <FormEditBooking idSelected={idSelected} bookingData={bookingDataArray} />
+      <ArjunaEditForm idSelected={idSelected} bookingData={bookingDataArray} />
+      <ArjunaFormBooking bookingData={bookingDataArray} />
+      {/* END REGION MODAL */}
     </div>
   );
 };

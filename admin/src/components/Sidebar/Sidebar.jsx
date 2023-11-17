@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { GrNext } from "react-icons/gr";
 import { FcDepartment } from "react-icons/fc";
-import { FaHouseChimney } from "react-icons/fa6";
+import { FaHouseChimney, FaUsers } from "react-icons/fa6";
+import { HiOutlineBuildingOffice } from "react-icons/hi2";
 import LogoSewaKawis from "../../assets/img/Sewa_Kawis-removebg-preview.png";
 import { useDispatch } from "react-redux";
 import { retrieveOffices } from "../../config/offices/officesThunk";
@@ -12,7 +13,6 @@ const Sidebar = () => {
   const [display, setDisplay] = useState(true);
   const dispatch = useDispatch();
   const offices = useOfficesSelector();
-
   useEffect(() => {
     dispatch(retrieveOffices());
   }, []);
@@ -36,7 +36,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <NavLink to={"/"}>
+      <NavLink to={"/dashboard"}>
         {({ isActive }) => (
           <ul
             className={`${
@@ -62,7 +62,62 @@ const Sidebar = () => {
           </ul>
         )}
       </NavLink>
+
+      <NavLink to={"/offices"}>
+        {({ isActive }) => (
+          <ul
+            className={`${
+              isActive
+                ? "w-full py-2 shadow-sm mb-2  bg-blue-400/20 rounded-xl border-blue-500 text-blue-500"
+                : "w-full py-4 text-slate-300"
+            } cursor-pointer`}
+          >
+            <li
+              className={`  flex mx-auto w-full  text-start ${
+                !display ? "text-center pl-0 " : "pl-11"
+              } justify-center items-center mr-10 `}
+            >
+              <HiOutlineBuildingOffice className="h-[28px]  w-[28px]" />
+              <span
+                className={`${
+                  !display && "hidden w-0"
+                } text-start font-medium pl-8 w-full text-sm`}
+              >
+                Offices
+              </span>
+            </li>
+          </ul>
+        )}
+      </NavLink>
+      <NavLink to={"/users"}>
+        {({ isActive }) => (
+          <ul
+            className={`${
+              isActive
+                ? "w-full py-2 shadow-sm mb-2  bg-blue-400/20 rounded-xl border-blue-500 text-blue-500"
+                : "w-full py-4 text-slate-300"
+            } cursor-pointer`}
+          >
+            <li
+              className={`flex mx-auto w-full  text-start ${
+                !display ? "text-center pl-0 " : "pl-11"
+              } justify-center items-center mr-10 `}
+            >
+              <FaUsers className="h-[28px]  w-[28px]" />
+              <span
+                className={`${
+                  !display && "hidden w-0"
+                } text-start font-medium pl-8 w-full text-sm`}
+              >
+                Users
+              </span>
+            </li>
+          </ul>
+        )}
+      </NavLink>
+
       {offices.map((office) => (
+        // ====== MAPING TITLE OF OFFICE ==========
         <NavLink
           to={
             office.title === "Gedung Arjuna"

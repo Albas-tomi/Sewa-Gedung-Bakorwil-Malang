@@ -26,6 +26,7 @@ const LoginInput = () => {
         setUser(data.data);
         alert("berhasil login");
         navigate("/");
+        window.location.reload();
       } catch (error) {
         alert("gagal login");
         console.log("error", error.message);
@@ -34,7 +35,7 @@ const LoginInput = () => {
     },
   });
   return (
-    <div className="mt-4">
+    <div className="mt-4 ">
       <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto ">
         <input
           type="email"

@@ -1,11 +1,23 @@
+import axios from "axios";
 import React from "react";
-const ConfirmLogout = ({ handleLogout }) => {
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
+import { useNavigate } from "react-router-dom";
+import { LiaQuestionSolid } from "react-icons/lia";
+const ConfirmLogout = () => {
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    axios.post("/admin-logout");
+    setUser("");
+    navigate("/");
+  };
   return (
     <div>
       <dialog id="my_modal_confirmLogout" className="modal">
         <form method="dialog" className="modal-box">
           <div className=" flex flex-col items-center justify-center">
-            {/* <img className="w-36" src={LogoConfirm} alt="LogoHapus" /> */}
+            <LiaQuestionSolid className="text-9xl text-blue-800" />
             <h3 className="font-bold text-lg text-center my-4">
               Apakah Anda Yakin Ingin <br /> Logout ?{" "}
             </h3>

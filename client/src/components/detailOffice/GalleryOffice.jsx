@@ -25,9 +25,8 @@ const GalleryOffice = ({ office }) => {
             office.photos.map((photo, idx) => (
               <div key={idx}>
                 <img
-                  src="https://a0.muscache.com/im/pictures/miso/Hosting-824015985248619464/original/0ff9dcba-2a84-4fc0-a253-bcd1a83fb0d7.jpeg?im_w=1200"
-                  //   src={"http://localhost:4000/uploads/" + photo}
-                  alt="Gedung"
+                  src={"http://localhost:4000/uploads/office/" + photo}
+                  alt="office"
                 />
               </div>
             ))}
@@ -43,9 +42,8 @@ const GalleryOffice = ({ office }) => {
             <img
               onClick={() => setShowAllImg(true)}
               className="aspect-square cursor-pointer object-cover"
-              src="https://a0.muscache.com/im/pictures/miso/Hosting-824015985248619464/original/5dfa21e4-4dd1-4aab-ad97-fb75c051d874.jpeg?im_w=1200"
-              //   src={"http://localhost:4000/uploads/" + office.photos?.[0]}
-              alt=""
+              src={"http://localhost:4000/uploads/office/" + office.photos?.[0]}
+              alt="office"
             />
           </div>
         )}
@@ -56,9 +54,8 @@ const GalleryOffice = ({ office }) => {
             <img
               onClick={() => setShowAllImg(true)}
               className="aspect-square cursor-pointer object-cover"
-              src="https://a0.muscache.com/im/pictures/miso/Hosting-824015985248619464/original/5dfa21e4-4dd1-4aab-ad97-fb75c051d874.jpeg?im_w=1200"
-              //   src={"http://localhost:4000/uploads/" + office.photos?.[1]}
-              alt=""
+              src={"http://localhost:4000/uploads/office/" + office.photos?.[1]}
+              alt="office"
             />
           </div>
         )}
@@ -67,9 +64,8 @@ const GalleryOffice = ({ office }) => {
             <img
               onClick={() => setShowAllImg(true)}
               className="aspect-square cursor-pointer  object-cover relative top-2"
-              src="https://a0.muscache.com/im/pictures/miso/Hosting-824015985248619464/original/5dfa21e4-4dd1-4aab-ad97-fb75c051d874.jpeg?im_w=1200"
-              //   src={"http://localhost:4000/uploads/" + office.photos?.[2]}
-              alt=""
+              src={"http://localhost:4000/uploads/office/" + office.photos?.[2]}
+              alt="office"
             />
           </div>
         )}

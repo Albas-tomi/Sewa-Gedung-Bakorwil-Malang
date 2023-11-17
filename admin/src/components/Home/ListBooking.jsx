@@ -3,13 +3,18 @@ import { useDispatch } from "react-redux";
 import { retrieveBooking } from "../../config/booking/bookingThunk";
 import { useBookingSelector } from "../../config/booking/bookingUseSelector";
 import dayjs from "dayjs";
+import { retrieveOffices } from "../../config/offices/officesThunk";
+import { useOfficesSelector } from "../../config/offices/officesSelector";
 
 const ListBookings = () => {
   const dispatch = useDispatch();
   const bookingData = useBookingSelector();
 
+  const officeData = useOfficesSelector();
+
   useEffect(() => {
     dispatch(retrieveBooking());
+    dispatch(retrieveOffices());
   }, []);
   return (
     <div className="overflow-x-auto w-full bg-white shadow-sm mt-6 rounded-xl p-3">
@@ -24,7 +29,6 @@ const ListBookings = () => {
             <th>Tempat</th>
             <th>Lembaga</th>
             <th>Status</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -41,24 +45,12 @@ const ListBookings = () => {
                   {dayjs(data.endTime).format("HH:mm")}
                 </span>
               </td>
-              <td className="font-bold text-lg"></td>
+              <td className="font-bold text-lg">
+                {officeData.find((item) => item._id === data.office)?.title ||
+                  ""}
+              </td>
               <td>{data.lembaga}</td>
               <td>Terima/Tolak</td>
-              <td className="grid grid-cols-2 gap-2">
-                <button className="btn btn-outline btn-warning btn-xs">
-                  Edit
-                </button>
-                <button className="btn btn-outline btn-error btn-xs">
-                  Hapus
-                </button>
-
-                <button className="btn btn-outline btn-info btn-xs">
-                  Detail
-                </button>
-                <button className="btn btn-outline btn-ghost btn-xs">
-                  Terima
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>

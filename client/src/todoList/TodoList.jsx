@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Input from "./Input";
 import ListTodo from "./ListTodo";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import {
 } from "../config/todo/todoListSelector";
 import { todoListAction } from "../config/todo/todoSlice";
 import { retrieveTodo } from "../config/todo/todoThunk";
+import emailjs from "@emailjs/browser";
 const TodoList = () => {
   const [idSelected, setIdSelected] = useState(null);
   const [dataEditSelected, setDataEditSelected] = useState(null);
@@ -50,6 +51,44 @@ const TodoList = () => {
   };
 
   //  COMPLETED TODO LIST===============
+
+  const form = useRef();
+
+  // State to manage form data
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    gedung: "",
+  });
+
+  // Function to handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Function to send an email when the form is submitted
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_s3n1ppe", // Replace with your service ID
+        "template_hwtabpm", // Replace with your template ID
+        e.target, // Reference to the form
+        "XeSkKCtKDKKBnm10x" // Replace with your public key
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          console.log("Email sent successfully!");
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
   return (
     <>
       <Input
@@ -69,7 +108,16 @@ const TodoList = () => {
         setIdSelected={setIdSelected}
         setDataEditSelected={setDataEditSelected}
       />
-      ;
+
+      <form ref={form} onSubmit={sendEmail}>
+        <label>Name</label>
+        <input type="text" onChange={handleInputChange} name="name" />
+        <label>Email</label>
+        <input type="email" onChange={handleInputChange} name="email" />
+        <label>gedung</label>
+        <textarea onChange={handleInputChange} name="gedung" />
+        <input type="submit" value="Send" />
+      </form>
     </>
   );
 };

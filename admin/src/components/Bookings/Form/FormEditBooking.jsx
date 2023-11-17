@@ -2,18 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import ReactCalendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useFormik } from "formik";
-import KtpUploader from "./KtpUploader";
-import TimesPerDay from "./TimesPerDay";
-import SuratPermohonanUploader from "./SuratPermohonanUploader";
-import PosterUploader from "./PosterUploader";
+import KtpUploader from "../KtpUploader";
+import SuratPermohonanUploader from "../SuratPermohonanUploader";
+import PosterUploader from "../PosterUploader";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  retrieveBookingById,
-  updateBookingById,
-} from "../../config/booking/bookingThunk";
-import { useBookingByIdSelector } from "../../config/booking/bookingUseSelector";
+import { updateBookingById } from "../../../config/booking/bookingThunk";
+import { useBookingByIdSelector } from "../../../config/booking/bookingUseSelector";
 import { parseISO } from "date-fns";
+import TimesPerDay from "../TimesPerDay";
 
 const FormEditBooking = ({ bookingData, idSelected }) => {
   const { id } = useParams();
@@ -27,7 +24,6 @@ const FormEditBooking = ({ bookingData, idSelected }) => {
   const [poster, setPoster] = useState([]);
 
   const dataEditSelected = useBookingByIdSelector();
-  console.log(dataEditSelected);
   useEffect(() => {
     if (dataEditSelected) {
       // Menggunakan parseISO untuk mengurai string tanggal
@@ -65,13 +61,6 @@ const FormEditBooking = ({ bookingData, idSelected }) => {
     dispatch(updateBookingById({ ...values, id: idSelected }));
   });
 
-  useEffect(() => {
-    if (idSelected) {
-      dispatch(retrieveBookingById(idSelected));
-    }
-    return;
-  }, [idSelected]);
-
   const handleGetDate = (date) => {
     setSelectedDate(date);
     setSelectedStartTime(null);
@@ -90,6 +79,7 @@ const FormEditBooking = ({ bookingData, idSelected }) => {
       lembaga: dataEditSelected.lembaga || "",
       alamatLembaga: dataEditSelected.alamatLembaga || "",
       phone: dataEditSelected.phone || "",
+      statusDiterima: dataEditSelected.statusDiterima,
       price: dataEditSelected.price || "",
       order_id: dataEditSelected.order_id || "",
     },
@@ -101,6 +91,7 @@ const FormEditBooking = ({ bookingData, idSelected }) => {
       values.endTime = selectedEndTime;
       values.suratPermohonan = suratPermohonan;
       values.posterKegiatan = poster;
+      values.statusDiterima = dataEditSelected.statusDiterima;
       handleEditBooking(values);
       document.getElementById("my_modal_formEditInput").close();
       setSelectedStartTime(null);

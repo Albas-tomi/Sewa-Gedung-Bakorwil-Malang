@@ -6,6 +6,7 @@ import GalleryOffice from "./GalleryOffice";
 import { useDispatch } from "react-redux";
 import { retrieveOfficeById } from "../../config/BookingOffice/officesThunk";
 import { useOfficesByIDSelector } from "../../config/BookingOffice/officesSelector";
+import { retrieveBooking } from "../../config/Booked/bookingThunk";
 
 const ListDetailOffice = () => {
   const { id } = useParams();
@@ -13,6 +14,7 @@ const ListDetailOffice = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (id) {
+      dispatch(retrieveBooking());
       dispatch(retrieveOfficeById(id));
     }
   }, [id]);
@@ -24,8 +26,7 @@ const ListDetailOffice = () => {
       <a className="my-2 block font-semibold underline">{office.address}</a>
       <div className="relative">
         <GalleryOffice office={office} />
-
-        <div className="grid mt-8 gap-8 grid-cols-1 md:grid-cols-[2fr_1fr]">
+        <div className="grid mt-8 gap-8 grid-cols-1">
           <div>
             <div>
               <h2 className="font-semibold text-2xl my-2">Description</h2>

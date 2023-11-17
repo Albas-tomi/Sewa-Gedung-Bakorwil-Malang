@@ -19,7 +19,6 @@ const ModalBooking = ({ booking }) => {
       order_id: booking.order_id || "",
     },
     onSubmit: async (values) => {
-      console.log(values);
       const config = {
         headers: {
           "Content-Type": "application/json",

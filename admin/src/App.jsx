@@ -4,22 +4,43 @@ import NavigationLayout from "./components/NavigationLayout/NavigationLayout";
 import Home from "./pages/Home";
 import Bookings from "./pages/Bookings";
 import axios from "axios";
+import Offices from "./pages/Offices";
+import Users from "./pages/Users";
+import FormOffices from "./pages/FormOffices";
+import PrivateRoute from "./components/PrivateRoute";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import UserContextProvider from "./components/UserContext";
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<NavigationLayout />}>
-          <Route index element={<Home />} />
-          <Route path="/arjuna/:id" element={<Bookings />} />
-          <Route path="/meetingroom/:id" element={<Bookings />} />
-          <Route path="/play-hard/:id" element={<Bookings />} />
-          <Route path="/command-center/:id" element={<Bookings />} />
-          <Route path="/co-working/:id" element={<Bookings />} />
-        </Route>
-      </Routes>
+      <UserContextProvider>
+        <Routes>
+          <Route index path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            element={
+              <PrivateRoute>
+                <NavigationLayout />
+              </PrivateRoute>
+            }
+          >
+            <Route path="/arjuna/:id" element={<Bookings />} />
+            <Route path="/dashboard" element={<Home />} />
+            <Route path="/meetingroom/:id" element={<Bookings />} />
+            <Route path="/play-hard/:id" element={<Bookings />} />
+            <Route path="/command-center/:id" element={<Bookings />} />
+            <Route path="/co-working/:id" element={<Bookings />} />
+            <Route path="/offices" element={<Offices />} />
+            <Route path="/form-offices" element={<FormOffices />} />
+            <Route path="/form-offices/:id" element={<FormOffices />} />
+            <Route path="/users" element={<Users />} />
+          </Route>
+        </Routes>
+      </UserContextProvider>
     </>
   );
 }

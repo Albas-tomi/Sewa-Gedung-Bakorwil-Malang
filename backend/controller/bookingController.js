@@ -18,7 +18,6 @@ const getDataUserFromReq = (req) => {
 };
 
 // ====== UPLOAD KTP USER ==========
-
 export const uploadKtpUser = (req, res) => {
   // UPLOAD FILE MEMORY
   const uploadedFilesKTP = [];
@@ -106,10 +105,10 @@ export const deletePoster = (req, res) => {
   });
 };
 // ====== DELETE ==========
-// ====== UPLOAD SURAT PERMOHONAN USER ==========
 
+// ====== UPLOAD SURAT PERMOHONAN USER ==========
 export const makeBookingOffice = async (req, res) => {
-  // const userData = await getDataUserFromReq(req);
+  const userData = await getDataUserFromReq(req);
   const {
     office,
     namaKegiatan,
@@ -117,10 +116,12 @@ export const makeBookingOffice = async (req, res) => {
     penanggungjawab,
     tujuanKegiatan,
     latarBelakang,
+    statusDiterima,
     sasaranKegiatan,
     lembaga,
     alamatLembaga,
     KTPUser,
+    jenisPembayaran,
     suratPermohonan,
     posterKegiatan,
     dateTime,
@@ -136,10 +137,11 @@ export const makeBookingOffice = async (req, res) => {
       office,
       namaKegiatan,
       jumlahPeserta,
-
+      jenisPembayaran,
       penanggungjawab,
       tujuanKegiatan,
       latarBelakang,
+      statusDiterima,
       sasaranKegiatan,
       lembaga,
       alamatLembaga,
@@ -152,6 +154,7 @@ export const makeBookingOffice = async (req, res) => {
       phone,
       price,
       order_id,
+      user: userData.id,
     })
       .then((bookingDoc) => {
         res.json(bookingDoc);
@@ -210,8 +213,10 @@ export const editBooking = async (req, res) => {
     penanggungjawab,
     tujuanKegiatan,
     latarBelakang,
+    statusDiterima,
     sasaranKegiatan,
     lembaga,
+    jenisPembayaran,
     alamatLembaga,
     KTPUser,
     suratPermohonan,
@@ -238,6 +243,8 @@ export const editBooking = async (req, res) => {
       tujuanKegiatan,
       latarBelakang,
       sasaranKegiatan,
+      jenisPembayaran,
+      statusDiterima,
       lembaga,
       alamatLembaga,
       KTPUser,
