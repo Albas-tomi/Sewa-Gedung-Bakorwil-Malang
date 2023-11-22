@@ -19,7 +19,7 @@ export const retrieveBookingById = createAsyncThunk(
 export const createdBooking = createAsyncThunk(
   "booking/createBooking",
   async (param) => {
-    const res = await axios.post("http://localhost:4000/booked", param);
+    const res = await axios.post("http://localhost:4000/admin-booking", param);
     return res.data;
   }
 );

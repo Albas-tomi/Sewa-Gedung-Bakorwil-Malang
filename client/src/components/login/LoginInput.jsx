@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { UserContext } from "../UserContext";
+import Swal from "sweetalert2";
 
 const Schema = Yup.object({
   email: Yup.string().required(),
@@ -24,11 +25,35 @@ const LoginInput = () => {
       try {
         const data = await axios.post("/login", values);
         setUser(data.data);
-        alert("berhasil login");
+        let timerInterval;
+        Swal.fire({
+          title: "Tunggu Beberapa Saat!",
+          html: "Akan Selesai dalam <b></b> detik.",
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log("I was closed by the timer");
+          }
+        });
         navigate("/");
         window.location.reload();
       } catch (error) {
-        alert("gagal login");
+        Swal.fire({
+          icon: "error",
+          title: "Cek Username dan Password anda !",
+          text: "Pastikan Username dan Password and benar!",
+        });
         console.log("error", error.message);
       }
       resetForm();

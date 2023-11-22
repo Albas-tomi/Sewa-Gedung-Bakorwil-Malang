@@ -16,7 +16,7 @@ const CenterNavbar = () => {
             path == "" ? "border-black" : "border-white"
           } hover:border-black border-b-2   duration-400`}
         >
-          <Link to={"/"}>Home</Link>{" "}
+          <Link to={"/"}> Beranda</Link>{" "}
         </li>
         <span>|</span>
         <li
@@ -24,7 +24,7 @@ const CenterNavbar = () => {
             path == "mybooking" ? "border-black" : "border-white"
           } hover:border-black border-b-2 duration-400  `}
         >
-          <Link to={!user ? "/login" : "/mybooking"}>My Booking</Link>
+          <Link to={!user ? "/login" : "/mybooking"}>Pesanan Saya</Link>
         </li>
         <span>|</span>
         <li
@@ -32,7 +32,7 @@ const CenterNavbar = () => {
             path == "about" ? "border-black" : "border-white"
           } duration-400`}
         >
-          <a href="">About</a>
+          <a href="">Tentang Kami</a>
         </li>
         <span>|</span>
         <li
@@ -40,7 +40,7 @@ const CenterNavbar = () => {
             path == "about" ? "border-black" : "border-white"
           } duration-400`}
         >
-          <a href="">Contact</a>
+          <a href="">Kontak</a>
         </li>
       </ul>
     </div>

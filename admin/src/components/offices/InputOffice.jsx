@@ -2,14 +2,10 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import PhotoUploader from "./PhotoUploader";
 import { useDispatch } from "react-redux";
-import {
-  createdOffice,
-  retrieveOfficesById,
-  updateOffice,
-} from "../../config/offices/officesThunk";
+import { createdOffice, updateOffice } from "../../config/offices/officesThunk";
 import { useNavigate, useParams } from "react-router-dom";
-import { useOfficesByIdSelector } from "../../config/offices/officesSelector";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const InputOffice = () => {
   const { id } = useParams();
@@ -24,7 +20,15 @@ const InputOffice = () => {
   const [checkOut, setCheckOut] = useState("");
   const [maxGuest, setMaxGuest] = useState("");
   const [price, setPrice] = useState(0);
+  const [catatan, setCatatan] = useState("");
+  const [fasilitas, setFasilitas] = useState("");
   const navigate = useNavigate();
+
+  const notify = (message) => {
+    toast.success(message, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
 
   useEffect(() => {
     if (!id) {
@@ -41,6 +45,8 @@ const InputOffice = () => {
       setCheckOut(data.tutup);
       setMaxGuest(data.maxGuest);
       setPrice(data.price);
+      setCatatan(data.catatan);
+      setFasilitas(data.fasilitas);
     });
   }, [id]);
 
@@ -55,6 +61,8 @@ const InputOffice = () => {
       buka: checkIn,
       tutup: checkOut,
       maxGuest: maxGuest,
+      catatan: catatan,
+      fasilitas: fasilitas,
       price: price,
     },
     // ======== SUBMIT DATA ===========
@@ -64,10 +72,12 @@ const InputOffice = () => {
         resetForm();
         setPhoto([]);
         navigate("/offices");
+        notify("Data Berhasil di Edit !");
       } else {
         dispatch(createdOffice(values));
         navigate("/offices");
         window.location.reload();
+        notify("Data Berhasil di Tambahkan !");
         resetForm();
       }
     },
@@ -123,8 +133,7 @@ const InputOffice = () => {
           }}
           value={description}
         />
-        <h2 className="text-2xl pt-4">Extra Info</h2>
-        <p className="text-gray-500 text-sm">Extra Info in to your office</p>
+        <h2 className="text-2xl pt-4">Ekstra Info Kegiatan</h2>
         <textarea
           name="extraInfo"
           id="extraInfo"
@@ -135,10 +144,30 @@ const InputOffice = () => {
           }}
           value={extraInfo}
         />
-        <h2 className="text-2xl pt-4">Check in&out times</h2>
-        <p className="text-gray-500 text-sm">
-          add check in&out in to your office bookings
-        </p>
+        <h2 className="text-2xl pt-4">Fasilitas</h2>
+        <textarea
+          name="fasilitas"
+          id="fasilitas"
+          className="textarea textarea-bordered textarea-sm w-full"
+          onChange={(e) => {
+            formik.handleChange(e);
+            setFasilitas(e.target.value);
+          }}
+          value={fasilitas}
+        />
+        <h2 className="text-2xl pt-4">Catatan Tambahan</h2>
+        <textarea
+          name="catatan"
+          id="catatan"
+          className="textarea textarea-bordered textarea-sm w-full"
+          onChange={(e) => {
+            formik.handleChange(e);
+            setCatatan(e.target.value);
+          }}
+          value={catatan}
+        />
+        <h2 className="text-2xl pt-4">Jam Buka & Jam Tutup</h2>
+
         <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
           <div>
             <h3 className="mt-2 -mb-1">Buka</h3>
@@ -169,7 +198,7 @@ const InputOffice = () => {
             />
           </div>
           <div>
-            <h3 className="mt-2 -mb-1">Max number</h3>
+            <h3 className="mt-2 -mb-1">Kapasitas Maksimal</h3>
             <input
               type="number"
               className="input input-bordered input-sm w-full"
@@ -183,7 +212,7 @@ const InputOffice = () => {
             />
           </div>
           <div>
-            <h3 className="mt-2 -mb-1">Price For Booked</h3>
+            <h3 className="mt-2 -mb-1">Harga Sewa</h3>
             <input
               type="number"
               name="price"

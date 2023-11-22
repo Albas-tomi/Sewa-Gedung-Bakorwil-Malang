@@ -105,10 +105,11 @@ export const deletePoster = (req, res) => {
   });
 };
 // ====== DELETE ==========
-
 // ====== UPLOAD SURAT PERMOHONAN USER ==========
+
 export const makeBookingOffice = async (req, res) => {
   const userData = await getDataUserFromReq(req);
+  console.log(userData);
   const {
     office,
     namaKegiatan,
@@ -155,6 +156,63 @@ export const makeBookingOffice = async (req, res) => {
       price,
       order_id,
       user: userData.id,
+    })
+      .then((bookingDoc) => {
+        res.json(bookingDoc);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  } catch (error) {
+    res.json(error.message);
+  }
+};
+export const adminMakeBookingOffice = async (req, res) => {
+  const {
+    office,
+    namaKegiatan,
+    jumlahPeserta,
+    penanggungjawab,
+    tujuanKegiatan,
+    latarBelakang,
+    statusDiterima,
+    sasaranKegiatan,
+    lembaga,
+    alamatLembaga,
+    KTPUser,
+    jenisPembayaran,
+    suratPermohonan,
+    posterKegiatan,
+    dateTime,
+    startTime,
+    endTime,
+    phone,
+    price,
+    order_id,
+  } = req.body;
+
+  try {
+    Booking.create({
+      office,
+      namaKegiatan,
+      jumlahPeserta,
+      jenisPembayaran,
+      penanggungjawab,
+      tujuanKegiatan,
+      latarBelakang,
+      statusDiterima,
+      sasaranKegiatan,
+      lembaga,
+      alamatLembaga,
+      KTPUser,
+      suratPermohonan,
+      posterKegiatan,
+      dateTime,
+      startTime,
+      endTime,
+      phone,
+      price,
+      order_id,
     })
       .then((bookingDoc) => {
         res.json(bookingDoc);
@@ -291,7 +349,9 @@ export const bayarTagihan = async (req, res) => {
         gross_amount: req.body.totalPay,
       },
       customer_details: {
-        nameOrdered: req.body.name,
+        first_name: req.body.nameOrder,
+        phone: req.body.phone,
+        nameOrdered: req.body.nameOrder,
         email: req.body.email,
       },
     };

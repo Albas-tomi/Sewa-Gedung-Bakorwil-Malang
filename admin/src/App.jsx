@@ -11,6 +11,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserContextProvider from "./components/UserContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
@@ -18,9 +20,9 @@ function App() {
   return (
     <>
       <UserContextProvider>
+        <ToastContainer autoClose={2000} />
         <Routes>
           <Route index path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route
             element={
               <PrivateRoute>
@@ -28,6 +30,7 @@ function App() {
               </PrivateRoute>
             }
           >
+            <Route path="/register" element={<Register />} />
             <Route path="/arjuna/:id" element={<Bookings />} />
             <Route path="/dashboard" element={<Home />} />
             <Route path="/meetingroom/:id" element={<Bookings />} />

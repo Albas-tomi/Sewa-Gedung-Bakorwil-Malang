@@ -9,6 +9,7 @@ import {
 import { todoListAction } from "../config/todo/todoSlice";
 import { retrieveTodo } from "../config/todo/todoThunk";
 import emailjs from "@emailjs/browser";
+import Carousel from "react-multi-carousel";
 const TodoList = () => {
   const [idSelected, setIdSelected] = useState(null);
   const [dataEditSelected, setDataEditSelected] = useState(null);
@@ -67,10 +68,7 @@ const TodoList = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Function to send an email when the form is submitted
   const sendEmail = (e) => {
-    e.preventDefault();
-
     emailjs
       .sendForm(
         "service_s3n1ppe", // Replace with your service ID

@@ -8,6 +8,7 @@ import { updateBookingById } from "../../../config/booking/bookingThunk";
 import { useBookingByIdSelector } from "../../../config/booking/bookingUseSelector";
 import { parseISO } from "date-fns";
 import TimesPerDay from "../TimesPerDay";
+import { toast } from "react-toastify";
 
 const ArjunaEditForm = ({ bookingData, idSelected }) => {
   const { id } = useParams();
@@ -16,6 +17,13 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedStartTime, setSelectedStartTime] = useState(null);
   const [selectedEndTime, setSelectedEndTime] = useState(null);
+  const [paymentOption, setPaymentOption] = useState(undefined);
+
+  const notify = () => {
+    toast.success("Berhasil Edit Data  !", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
 
   const dataEditSelected = useBookingByIdSelector();
   useEffect(() => {
@@ -35,9 +43,9 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
       setSelectedDate(isoDateTime);
       setSelectedStartTime(isoStartTime);
       setSelectedEndTime(isoEndTime);
+      setPaymentOption(dataEditSelected.jenisPembayaran);
     } else if (dataEditSelected.length === 0) {
       // Jika tidak ada data edit, atur nilai-nilai formik.values dan state menjadi kosong
-
       setSelectedDate(new Date());
       setSelectedStartTime(null);
       setSelectedEndTime(null);
@@ -67,6 +75,7 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
       phone: dataEditSelected.phone || "",
       price: dataEditSelected.price || "",
       order_id: dataEditSelected.order_id || "",
+      jenisPembayaran: dataEditSelected.jenisPembayaran || "",
     },
     onSubmit: async (values, { resetForm }) => {
       values.office = id;
@@ -74,8 +83,10 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
       values.startTime = selectedStartTime;
       values.endTime = selectedEndTime;
       values.statusDiterima = dataEditSelected.statusDiterima;
+      values.jenisPembayaran = paymentOption;
       handleEditBooking(values);
       document.getElementById("my_modal_formEditArjuna").close();
+      notify();
       setSelectedStartTime(null);
       setSelectedEndTime(null);
       setSelectedDate(new Date());
@@ -172,6 +183,72 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                     placeholder="Alamat Penanggung Jawab"
                     className="textarea textarea-bordered textarea-sm w-full max-w-xs"
                   ></textarea>
+
+                  <div>
+                    <label className="font-bold">Pilih Jumlah Bayar :</label>
+                    <div className="grid grid-cols-2 mt-3 items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          id="payment_50"
+                          name="paymentOption"
+                          className="radio"
+                          value="DP Rp.1.750.000"
+                          checked={paymentOption === "DP Rp.1.750.000"}
+                          required
+                          onChange={() => setPaymentOption("DP Rp.1.750.000")}
+                        />
+                        <label className="text-xs" htmlFor="payment_50">
+                          50% DP Rp.1.750.000
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          id="payment_full"
+                          name="paymentOption"
+                          className="radio"
+                          value="Lunas"
+                          required
+                          checked={paymentOption === "Lunas"}
+                          onChange={() => setPaymentOption("Lunas")}
+                        />
+                        <label className="text-xs" htmlFor="payment_full">
+                          Pembayaran Penuh Rp.3.500.000
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          id="payment_25"
+                          name="paymentOption"
+                          className="radio"
+                          value="DP Rp.200.000"
+                          required
+                          checked={paymentOption === "DP Rp.200.000"}
+                          onChange={() => setPaymentOption("DP Rp.200.000")}
+                        />
+                        <label className="text-xs" htmlFor="payment_25">
+                          DP Rp.200.000
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          id="payment_25"
+                          name="paymentOption"
+                          className="radio"
+                          value="Tanpa DP"
+                          required
+                          checked={paymentOption === "Tanpa DP"}
+                          onChange={() => setPaymentOption("Tanpa DP")}
+                        />
+                        <label className="text-xs" htmlFor="payment_25">
+                          Pengajuan Permohonan Tanpa DP
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <button
@@ -202,9 +279,8 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                   });
                   setSelectedEndTime(null);
                   setSelectedStartTime(null);
+                  setPaymentOption(undefined);
                   setSelectedDate(new Date());
-                  setPoster([]);
-                  setSuratPermohonan([]);
                 }}
                 className="btn btn-sm"
               >

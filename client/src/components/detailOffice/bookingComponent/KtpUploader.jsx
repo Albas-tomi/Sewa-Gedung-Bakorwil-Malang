@@ -80,6 +80,7 @@ const KtpUploader = ({ formik, setPhotoKtp, photoKtp }) => {
       >
         <input
           type="file"
+          required
           onChange={uploadKtp}
           accept=".jpg,.jpeg,.png"
           className="file-input file-input-bordered file-input-xs w-full max-w-xs"

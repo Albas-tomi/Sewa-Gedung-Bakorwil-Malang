@@ -1,6 +1,7 @@
 import { format, isBefore, isSameDay, isWithinInterval, set } from "date-fns";
 import React from "react";
 import { getTimes } from "./getTimesForDay";
+import { useParams } from "react-router-dom";
 
 const TimesPerDay = ({
   selectedDate,
@@ -10,10 +11,12 @@ const TimesPerDay = ({
   selectedEndTime,
   bookingData,
 }) => {
+  const { id } = useParams();
+
   const myBookedWithStatusDiterima = bookingData?.filter(
     (item) => item.statusDiterima === true
   );
-  const jamPerHari = getTimes(selectedDate);
+  const jamPerHari = getTimes({ selectedDate, id });
 
   const isTimeDisabled = (time) => {
     if (!selectedDate) return false;

@@ -7,6 +7,8 @@ const Office = new mongoose.Schema({
   photos: [String],
   description: String,
   extraInfo: String,
+  catatan: String,
+  fasilitas: String,
   buka: { type: String, required: false },
   tutup: { type: String, required: false },
   maxGuest: Number,

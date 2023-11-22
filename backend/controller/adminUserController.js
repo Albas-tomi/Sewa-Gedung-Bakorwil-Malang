@@ -39,7 +39,7 @@ export const loginAdminUser = async (req, res) => {
           {},
           (error, token) => {
             if (error) throw error;
-            res.cookie("tokenAdmin", token).json(token);
+            res.cookie("token", token).json(token);
           }
         );
       } else {
@@ -53,7 +53,7 @@ export const loginAdminUser = async (req, res) => {
 
 export const userAdminLogout = (req, res) => {
   try {
-    res.cookie("tokenAdmin", "").json(true);
+    res.cookie("token", "").json(true);
   } catch (error) {
     res.json(error.message);
   }

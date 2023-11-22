@@ -29,7 +29,7 @@ export const confirmAdmin = async (req, res) => {
           {
             item: office,
             description:
-              "'Diterima', Mohon Membawa Bukti Konfirmasi ini dan datang 1 jam sebelum kegiatan untuk melakukan registrasi ulang",
+              "'Diterima', dimohon membawa bukti konfirmasi ini dan datang 1 jam sebelum kegiatan untuk melakukan registrasi ulang",
           },
         ],
         columns: {
@@ -91,7 +91,7 @@ export const confirCancelmAdmin = async (req, res) => {
           {
             item: office,
             description:
-              "'Maaf, Permohonan Anda Ditolak. Kami menghargai partisipasi Anda dan berharap dapat melayani Anda di kesempatan lain.'",
+              "'Mohon maaf, permohonan anda ditolak. Kami menghargai partisipasi Anda dan berharap dapat melayani Anda di kesempatan lain.'",
           },
         ],
         columns: {

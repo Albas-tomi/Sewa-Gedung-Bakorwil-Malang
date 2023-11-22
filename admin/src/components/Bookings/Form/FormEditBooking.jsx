@@ -11,6 +11,7 @@ import { updateBookingById } from "../../../config/booking/bookingThunk";
 import { useBookingByIdSelector } from "../../../config/booking/bookingUseSelector";
 import { parseISO } from "date-fns";
 import TimesPerDay from "../TimesPerDay";
+import { toast } from "react-toastify";
 
 const FormEditBooking = ({ bookingData, idSelected }) => {
   const { id } = useParams();
@@ -22,6 +23,11 @@ const FormEditBooking = ({ bookingData, idSelected }) => {
   const [photoKtp, setPhotoKtp] = useState([]);
   const [suratPermohonan, setSuratPermohonan] = useState([]);
   const [poster, setPoster] = useState([]);
+  const notify = () => {
+    toast.success("Berhasil Edit Data  !", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
 
   const dataEditSelected = useBookingByIdSelector();
   useEffect(() => {
@@ -94,6 +100,7 @@ const FormEditBooking = ({ bookingData, idSelected }) => {
       values.statusDiterima = dataEditSelected.statusDiterima;
       handleEditBooking(values);
       document.getElementById("my_modal_formEditInput").close();
+      notify();
       setSelectedStartTime(null);
       setSelectedEndTime(null);
       setSelectedDate(new Date());

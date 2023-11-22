@@ -86,6 +86,7 @@ const SuratPermohonanUploader = ({
       >
         <input
           type="file"
+          required
           onChange={uploadSurat}
           accept=".pdf"
           className="file-input file-input-bordered file-input-xs w-full max-w-xs"

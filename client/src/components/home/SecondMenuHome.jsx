@@ -14,7 +14,7 @@ const SecondMenuHome = () => {
           <span>Badan Koordinasi Wilayah Pemerintahan dan Pembangunan</span>
           <span>III Provinsi Jawa Timur di Malang </span>
         </div>
-        <img src={LogoJatim} alt="Logo" />
+        <img src={LogoJatim} alt="Logo" className="md:w-20 md:mx-2 lg:w-auto" />
       </div>
     </div>
   );

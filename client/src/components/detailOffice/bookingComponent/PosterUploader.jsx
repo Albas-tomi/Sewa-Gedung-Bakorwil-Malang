@@ -78,6 +78,7 @@ const PosterUploader = ({ formik, setPoster, poster }) => {
         }`}
       >
         <input
+          required
           type="file"
           onChange={uploadPoster}
           accept=".jpg,.jpeg,.png"

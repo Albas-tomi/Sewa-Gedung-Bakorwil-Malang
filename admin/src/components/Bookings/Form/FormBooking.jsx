@@ -10,6 +10,7 @@ import TimesPerDay from "../TimesPerDay";
 import KtpUploader from "../KtpUploader";
 import SuratPermohonanUploader from "../SuratPermohonanUploader";
 import PosterUploader from "../PosterUploader";
+import { toast } from "react-toastify";
 
 const FormBooking = ({ bookingData }) => {
   const { id } = useParams();
@@ -21,6 +22,11 @@ const FormBooking = ({ bookingData }) => {
   const [photoKtp, setPhotoKtp] = useState([]);
   const [suratPermohonan, setSuratPermohonan] = useState([]);
   const [poster, setPoster] = useState([]);
+  const notify = () => {
+    toast.success("Berhasil Menambahkan Data  !", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
 
   const handleGetDate = (date) => {
     setSelectedDate(date);
@@ -59,6 +65,7 @@ const FormBooking = ({ bookingData }) => {
       values.posterKegiatan = poster;
       dispatch(createdBooking(values));
       document.getElementById("my_modal_formInput").close();
+      notify();
       setSelectedStartTime(null);
       setSelectedEndTime(null);
       setSelectedDate(new Date());

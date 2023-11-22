@@ -7,6 +7,7 @@ import { UserContext } from "../UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ModalAlertLogout from "./ModalAlertLogout";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const [isActived, setIsActived] = useState(false);
@@ -15,6 +16,27 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await axios.post("/logout");
+    let timerInterval;
+    Swal.fire({
+      title: "Tunggu Beberapa Saat!",
+      html: "Akan Selesai dalam <b></b>  detik.",
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup().querySelector("b");
+        timerInterval = setInterval(() => {
+          timer.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
     navigate("/");
     setUser(null);
   };
@@ -53,7 +75,7 @@ const Navbar = () => {
 
               {user ? (
                 <div className="py-1 px-2 rounded-full bg-black text-xs text-white">
-                  {!!user.name && <p>{user.name}</p>}
+                  {user?.name.charAt(0)}
                 </div>
               ) : (
                 <span className="rounded-full p-2  bg-black text-white">

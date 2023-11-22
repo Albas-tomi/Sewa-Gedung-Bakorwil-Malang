@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createdBooking } from "../../../config/booking/bookingThunk";
 import TimesPerDay from "../TimesPerDay";
+import { toast } from "react-toastify";
 
 const ArjunaFormBooking = ({ bookingData }) => {
   const { id } = useParams();
@@ -15,6 +16,13 @@ const ArjunaFormBooking = ({ bookingData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedStartTime, setSelectedStartTime] = useState(null);
   const [selectedEndTime, setSelectedEndTime] = useState(null);
+  const [paymentOption, setPaymentOption] = useState(undefined);
+
+  const notify = () => {
+    toast.success("Berhasil Menambahkan Data  !", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
 
   const handleGetDate = (date) => {
     setSelectedDate(date);
@@ -36,6 +44,7 @@ const ArjunaFormBooking = ({ bookingData }) => {
       phone: "",
       price: 0,
       statusDiterima: true,
+      jenisPembayaran: paymentOption,
       order_id: `order_${uuidv4()}`,
     },
     onSubmit: async (values, { resetForm }) => {
@@ -43,9 +52,19 @@ const ArjunaFormBooking = ({ bookingData }) => {
       values.dateTime = selectedDate;
       values.startTime = selectedStartTime;
       values.endTime = selectedEndTime;
+      if (paymentOption === 3500000) {
+        values.jenisPembayaran = "Lunas";
+      } else if (paymentOption === 1750000) {
+        values.jenisPembayaran = "DP Rp.1.750.000";
+      } else if (paymentOption === 200000) {
+        values.jenisPembayaran = "DP Rp.200.000";
+      } else {
+        values.jenisPembayaran = "Tanpa DP";
+      }
 
       dispatch(createdBooking(values));
       document.getElementById("my_modal_formInputArjuna").close();
+      notify();
       setSelectedStartTime(null);
       setSelectedEndTime(null);
       setSelectedDate(new Date());
@@ -142,6 +161,72 @@ const ArjunaFormBooking = ({ bookingData }) => {
                     placeholder="Alamat Penanggung Jawab"
                     className="textarea textarea-bordered textarea-sm w-full max-w-xs"
                   ></textarea>
+
+                  <div>
+                    <label className="font-bold">Pilih Jumlah Bayar :</label>
+                    <div className="grid grid-cols-2 mt-3 items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          id="payment_50"
+                          name="paymentOption"
+                          className="radio"
+                          value="1750000"
+                          checked={paymentOption === 1750000}
+                          required
+                          onChange={() => setPaymentOption(1750000)}
+                        />
+                        <label className="text-xs" htmlFor="payment_50">
+                          50% DP Rp.1.750.000
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          id="payment_full"
+                          name="paymentOption"
+                          className="radio"
+                          value="3500000"
+                          required
+                          checked={paymentOption === 3500000}
+                          onChange={() => setPaymentOption(3500000)}
+                        />
+                        <label className="text-xs" htmlFor="payment_full">
+                          Pembayaran Penuh Rp.3.500.000
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          id="payment_25"
+                          name="paymentOption"
+                          className="radio"
+                          value="200000"
+                          required
+                          checked={paymentOption === 200000}
+                          onChange={() => setPaymentOption(200000)}
+                        />
+                        <label className="text-xs" htmlFor="payment_25">
+                          DP Rp.200.000
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          id="payment_25"
+                          name="paymentOption"
+                          className="radio"
+                          value="0"
+                          required
+                          checked={paymentOption === 0}
+                          onChange={() => setPaymentOption(0)}
+                        />
+                        <label className="text-xs" htmlFor="payment_25">
+                          Pengajuan Permohonan Tanpa DP
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <button

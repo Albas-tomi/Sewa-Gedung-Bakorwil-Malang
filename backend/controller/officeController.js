@@ -1,7 +1,5 @@
-import multer from "multer";
 import fs from "fs";
 import Office from "../models/office.js";
-import imageDownloader from "image-downloader";
 import path from "path";
 
 export const getOffices = async (req, res) => {

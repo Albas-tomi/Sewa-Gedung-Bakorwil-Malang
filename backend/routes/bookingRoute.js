@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  adminMakeBookingOffice,
   bayarTagihan,
   deleteBooking,
   deletePhotoKtp,
@@ -72,6 +73,7 @@ router.delete("/deleteposter/:fileName", deletePoster);
 router.delete("/deletesuratpermohonan/:fileName", deleteSuratPermohonan);
 router.put("/editbooking/:id", editBooking);
 router.post("/booked", makeBookingOffice);
+router.post("/admin-booking", adminMakeBookingOffice);
 router.get("/mybooking", getDataMyBookings);
 router.get("/bookings", getBookings);
 router.get("/bookingById/:id", getDataBookingById);

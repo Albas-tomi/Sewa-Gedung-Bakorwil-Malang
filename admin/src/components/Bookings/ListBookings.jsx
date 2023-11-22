@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
+  useBookingLoadingSelector,
   useBookingSelector,
   useBookingTypeSelector,
 } from "../../config/booking/bookingUseSelector";
@@ -20,19 +21,19 @@ import FormEditBooking from "./Form/FormEditBooking";
 import ArjunaFormBooking from "./Form/ArjunaFormBooking";
 import ArjunaEditForm from "./Form/ArjunaEditFrom";
 import ConfirmModal from "./ConfirmModal";
+import ConfirmTolakModal from "./ConfirmTolakModal";
+import ConfirmDelete from "./ConfirmDelete";
 
 const ListBookings = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const bookingData = useBookingSelector();
   const officeData = useOfficesSelector();
+  const isLoading = useBookingLoadingSelector();
   const bookingType = useBookingTypeSelector();
   const [idSelected, setIdSelected] = useState(null);
   const [idDiterima, setIdDiterima] = useState(null);
-
-  const handleDeleteBooking = useCallback((id) => {
-    dispatch(deleteBookingById({ id }));
-  });
+  const [idDelete, setIdDelete] = useState(null);
 
   // CEK APAKAH DATANYA BERUPA  ARRAY
   const bookingDataArray = Array.isArray(bookingData) ? bookingData : [];
@@ -68,7 +69,7 @@ const ListBookings = () => {
 
   return (
     <div className="overflow-x-auto w-full bg-white shadow-sm mt-6 rounded-xl p-3">
-      <table className="table w-full text-center">
+      <table className="table relative w-full text-center">
         {/* head */}
         <thead>
           <tr>
@@ -80,10 +81,18 @@ const ListBookings = () => {
             <th className={id === "65534727b0b193dc7e590891" ? "hidden" : ""}>
               Lembaga
             </th>
+            <th className={id !== "65534727b0b193dc7e590891" ? "hidden" : ""}>
+              Pembayaran
+            </th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
+        {isLoading === true && (
+          <tr className=" ml-16 relative left-96  flex justify-center w-full bottom-1/2 ">
+            <span className="loading  text-blue-500 loading-bars loading-lg "></span>
+          </tr>
+        )}
         <tbody>
           {bookingDataArray
             .filter((data) => data.office === id)
@@ -110,52 +119,77 @@ const ListBookings = () => {
                 >
                   {data.lembaga}
                 </td>
+                <td
+                  className={id !== "65534727b0b193dc7e590891" ? "hidden" : ""}
+                >
+                  {data.jenisPembayaran}
+                </td>
                 <td>
                   {data.statusDiterima === false ? (
-                    <button
-                      onClick={() => {
-                        setIdDiterima(data._id);
-                        document
-                          .getElementById("konfirmasi_terima")
-                          .showModal();
-                      }}
-                      className="btn btn-outline btn-ghost btn-xs"
-                    >
-                      Terima
-                    </button>
-                  ) : (
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => {
+                          setIdDiterima(data._id);
+                          document
+                            .getElementById("konfirmasi_terima")
+                            .showModal();
+                        }}
+                        className="btn btn-outline btn-ghost btn-xs"
+                      >
+                        Terima
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIdDiterima(data._id);
+                          document
+                            .getElementById("konfirmasi_tolak")
+                            .showModal();
+                        }}
+                        className="btn btn-outline btn-error btn-xs"
+                      >
+                        Tolak
+                      </button>
+                    </div>
+                  ) : data.statusDiterima === true ? (
                     "DITERIMA"
+                  ) : (
+                    "DITOLAK"
                   )}
                 </td>
-                <td className="flex mt-2 items-center justify-center gap-2">
-                  <button
-                    onClick={() => {
-                      if (id === "65534727b0b193dc7e590891") {
-                        document
-                          .getElementById("my_modal_formEditArjuna")
-                          .showModal();
-                        setIdSelected(data._id);
-                      } else {
-                        document
-                          .getElementById("my_modal_formEditInput")
-                          .showModal();
-                        setIdSelected(data._id);
-                      }
-                    }}
-                    className="btn btn-outline btn-warning btn-xs"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteBooking(data._id)}
-                    className="btn btn-outline btn-error btn-xs"
-                  >
-                    Hapus
-                  </button>
+                <td>
+                  <div className="flex items-center justify-center gap-2">
+                    <button
+                      onClick={() => {
+                        if (id === "65534727b0b193dc7e590891") {
+                          document
+                            .getElementById("my_modal_formEditArjuna")
+                            .showModal();
+                          setIdSelected(data._id);
+                        } else {
+                          document
+                            .getElementById("my_modal_formEditInput")
+                            .showModal();
+                          setIdSelected(data._id);
+                        }
+                      }}
+                      className="btn btn-outline btn-warning btn-xs"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIdDelete(data._id);
+                        document.getElementById("konfirmasi_delete").show();
+                      }}
+                      className="btn btn-outline btn-error btn-xs"
+                    >
+                      Hapus
+                    </button>
 
-                  <button className="btn btn-outline btn-info btn-xs">
-                    Detail
-                  </button>
+                    <button className="btn btn-outline btn-info btn-xs">
+                      Detail
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -163,6 +197,11 @@ const ListBookings = () => {
       </table>
       {/* REGION MODAL */}
       <ConfirmModal idDiterima={idDiterima} setIdDiterima={setIdDiterima} />
+      <ConfirmTolakModal
+        idDiterima={idDiterima}
+        setIdDiterima={setIdDiterima}
+      />
+      <ConfirmDelete idDelete={idDelete} />
       <FormBooking bookingData={bookingDataArray} />
       <FormEditBooking idSelected={idSelected} bookingData={bookingDataArray} />
       <ArjunaEditForm idSelected={idSelected} bookingData={bookingDataArray} />

@@ -32,20 +32,54 @@ const ListDetailOffice = () => {
               <h2 className="font-semibold text-2xl my-2">Description</h2>
               {office.description}
             </div>
-            Check-in : {office.checkIn}
-            <br />
-            Check-out : {office.checkOut}
-            <br />
-            Max of Guest : {office.maxGuest}
+            <div className="my-2">
+              <h2 className="text-xl font-semibold">Informasi</h2>
+              <div>
+                <section className="flex gap-4">
+                  <strong>Buka</strong> :
+                  <span className="font-semibold text-gray-500">
+                    {office.buka}
+                  </span>
+                </section>
+                <section className="flex gap-4">
+                  <strong>Tutup </strong> :
+                  <span className="font-semibold text-gray-500">
+                    {office.tutup}
+                  </span>
+                </section>
+                <section className="flex gap-4">
+                  <strong>Maksimal Kapasitas Pengunjung </strong> :
+                  <span className="font-semibold text-gray-500">
+                    {office.maxGuest} Orang
+                  </span>
+                </section>
+                <section className="flex gap-4">
+                  <strong>Fasilitas </strong> :{" "}
+                  <span className="font-semibold text-gray-500">
+                    {office.fasilitas}
+                  </span>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-3 grid-cols-1">
+            <div>
+              <h2 className="text-xl font-semibold">Informasi Kegunaan</h2>
+              <p className="text-base   text-gray-500 font-semibold">
+                {office.extraInfo}
+              </p>
+            </div>
+            <div>
+              <h2 className="text-xl font-semibold">
+                Informasi Pengajuan Penyewaan/Permohonan
+              </h2>
+              <p className="text-base   text-red-600"> {office.catatan}</p>
+            </div>
           </div>
           <div>
             <BookingWidget office={office} />
           </div>
         </div>
-      </div>
-      <div className="text-2xl font-semibold">Extra info</div>
-      <div className="text-sm text-gray-700 mt-4 leading-4">
-        {office.extraInfo}
       </div>
     </div>
   );
