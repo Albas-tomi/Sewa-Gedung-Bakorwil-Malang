@@ -1,5 +1,5 @@
 import React from "react";
-import { IoLogOut } from "react-icons/io5";
+import { FaPersonCircleQuestion } from "react-icons/fa6";
 import Swal from "sweetalert2";
 const ModalAlertLogout = ({ handleLogout }) => {
   return (
@@ -10,7 +10,7 @@ const ModalAlertLogout = ({ handleLogout }) => {
             <h3 className="font-bold text-lg ">
               Apakah Anda yakin ingin keluar ?
             </h3>
-            <IoLogOut className="text-9xl text-blue-600" />
+            <FaPersonCircleQuestion className="text-8xl text-blue-600" />
           </div>
           <div className="modal-action">
             <div className="flex justify-center gap-3 px-3  w-full">

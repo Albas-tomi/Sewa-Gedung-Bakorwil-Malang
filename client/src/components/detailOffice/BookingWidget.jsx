@@ -13,17 +13,12 @@ import TimesPerDay from "./bookingComponent/TimesPerDay";
 import KtpUploader from "./bookingComponent/KtpUploader";
 import SuratPermohonanUploader from "./bookingComponent/SuratPermohonanUploader";
 import PosterUploader from "./bookingComponent/PosterUploader";
-import { createBooking } from "../../config/Booked/bookingThunk";
-import emailjs from "@emailjs/browser";
-import Swal from "sweetalert2";
-import LogoSewaKawis from "../../assets/img/Sewa_Kawis-removebg-preview.png";
 import ModalConfirm from "./ModalConfirm";
 
 const BookingWidget = ({ office }) => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const bookingData = useBookingSelector();
   const bookingDataArray = Array.isArray(bookingData) ? bookingData : [];
   const dataBooked = bookingDataArray.filter((data) => data.office === id);
@@ -42,25 +37,6 @@ const BookingWidget = ({ office }) => {
     setSelectedEndTime(null);
   };
 
-  const sendEmail = (values) => {
-    emailjs
-      .sendForm(
-        "service_s3n1ppe", // Replace with your service ID
-        "template_hwtabpm", // Replace with your template ID
-        values,
-        "XeSkKCtKDKKBnm10x" // Replace with your user ID
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          console.log("Email sent successfully!");
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-  };
-
   const formik = useFormik({
     initialValues: {
       office: id,
@@ -74,12 +50,14 @@ const BookingWidget = ({ office }) => {
       lembaga: "",
       alamatLembaga: "",
       KTPUser: "",
+      catatanTambahan: "",
       suratPermohonan: "",
       posterKegiatan: "",
       dateTime: "",
       startTime: "",
       endTime: "",
       phone: "",
+      email: "",
       statusDiterima: false,
       price: paymentOption,
       order_id: `order_${uuidv4()}`,
@@ -94,13 +72,8 @@ const BookingWidget = ({ office }) => {
         values.endTime = selectedEndTime;
         values.suratPermohonan = suratPermohonan;
         values.posterKegiatan = poster;
-        if (paymentOption === 3500000) {
-          values.jenisPembayaran = "Lunas";
-        } else if (paymentOption === 1750000) {
-          values.jenisPembayaran = "DP Rp.1.750.000";
-        } else {
-          values.jenisPembayaran = "DP Rp.200.000";
-        }
+        values.jenisPembayaran = paymentOption;
+
         if (office.title === "Gedung Arjuna") {
           setBooking(values);
           document.getElementById("modal_payment").show();
@@ -183,9 +156,6 @@ const BookingWidget = ({ office }) => {
             <div className="grid grid-cols-2 gap-2">
               <div className="flex flex-col">
                 <div className="form-control w-full max-w-xs">
-                  {/* <label className="label">
-                    <span className="label-text">Nama Kegiatan</span>
-                  </label> */}
                   <input
                     name="namaKegiatan"
                     id="namaKegiatan"
@@ -206,9 +176,6 @@ const BookingWidget = ({ office }) => {
               </div>
               <div className="flex flex-col">
                 <div className="form-control w-full max-w-xs">
-                  {/* <label className="label">
-                    <span className="label-text">Jumlah Peserta</span>
-                  </label> */}
                   <input
                     type="number"
                     required
@@ -261,6 +228,21 @@ const BookingWidget = ({ office }) => {
               </p>
             )}
             <input
+              type="email"
+              name="email"
+              required
+              id="email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              placeholder="No Tlp."
+              className="input my-2 input-bordered input-sm w-full "
+            />
+            {formik.errors.email && formik.touched.email && (
+              <p className="mt-1 w-full text-red-500 text-sm">
+                {formik.errors.email}
+              </p>
+            )}
+            <input
               required
               name="tujuanKegiatan"
               id="tujuanKegiatan"
@@ -275,6 +257,16 @@ const BookingWidget = ({ office }) => {
                 {formik.errors.tujuanKegiatan}
               </p>
             )}
+            <input
+              name="lembaga"
+              id="lembaga"
+              onChange={formik.handleChange}
+              value={formik.values.lembaga}
+              type="text"
+              required
+              placeholder="Instansi/Lembaga/Komunitas"
+              className="input my-2 input-bordered input-sm w-full "
+            />
             <textarea
               required
               name="alamatLembaga"
@@ -284,11 +276,21 @@ const BookingWidget = ({ office }) => {
               placeholder="Alamat Instansi/Lembaga/Komunitas"
               className="textarea textarea-bordered textarea-sm w-full max-w-xs"
             ></textarea>
-            {formik.errors.alamatLembaga && formik.touched.alamatLembaga && (
-              <p className="mt-1 w-full text-red-500 text-sm">
-                {formik.errors.alamatLembaga}
-              </p>
-            )}
+            <textarea
+              required
+              name="catatanTambahan"
+              id="catatanTambahan"
+              onChange={formik.handleChange}
+              value={formik.values.catatanTambahan}
+              placeholder="Catatan tambahan"
+              className="textarea textarea-bordered textarea-sm w-full max-w-xs"
+            ></textarea>
+            {formik.errors.catatanTambahan &&
+              formik.touched.catatanTambahan && (
+                <p className="mt-1 w-full text-red-500 text-sm">
+                  {formik.errors.catatanTambahan}
+                </p>
+              )}
             {office.title === "Gedung Arjuna" && (
               <div className={office.title !== "Gedung Arjuna" ? "hidden" : ""}>
                 <label className="font-bold">Pilih Jumlah Bayar :</label>
@@ -376,17 +378,6 @@ const BookingWidget = ({ office }) => {
                   type="text"
                   required
                   placeholder="Sasaran/Peserta Kegiatan"
-                  className="input my-2 input-bordered input-sm w-full "
-                />
-
-                <input
-                  name="lembaga"
-                  id="lembaga"
-                  onChange={formik.handleChange}
-                  value={formik.values.lembaga}
-                  type="text"
-                  required
-                  placeholder="Instansi/Lembaga/Komunitas"
                   className="input my-2 input-bordered input-sm w-full "
                 />
 

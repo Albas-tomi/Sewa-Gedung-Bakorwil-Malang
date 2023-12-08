@@ -1,19 +1,14 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import dayjs from "dayjs";
 import { FcMoneyTransfer, FcOvertime, FcClock } from "react-icons/fc";
-import { Link, useParams } from "react-router-dom";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { formatRupiah } from "../../rpFormatter";
-import { useMybookingSelector } from "../../config/Booked/bookingSelector";
-import { retrieveMyBooking } from "../../config/Booked/bookingThunk";
 
 const CardDetailBooking = ({ booking }) => {
-  const { id } = useParams();
   return (
     <>
       {
-        <div className="card relative flex md:max-h-52 flex-col mx-4 md:flex-row card-side bg-gray-100/95 shadow-sm my-2">
+        <div className="card relative flex md:max-h-96 flex-col mx-4 md:flex-row card-side bg-gray-100/95 shadow-sm my-2">
           <div className="card-body ">
             <h2 className="card-title">{booking.office.title}</h2>
             <div className="flex items-center  gap-2">
@@ -35,6 +30,12 @@ const CardDetailBooking = ({ booking }) => {
               <div className="flex  mt-2 border-t-2 md:border-none md:mt-1 gap-3 items-center">
                 <FcMoneyTransfer className="text-2xl mt-1" />
                 <p className="font-semibold">{formatRupiah(booking.price)}</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-lg font-medium">Catatan</p>
+              <div className="flex  mt-2 border-t-2 md:border-none md:mt-1 gap-3 items-center">
+                <p className="font-semibold">{booking.catatanTambahan}</p>
               </div>
             </div>
           </div>

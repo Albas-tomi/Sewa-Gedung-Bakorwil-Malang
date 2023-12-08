@@ -79,7 +79,7 @@ const FormBooking = ({ bookingData }) => {
   return (
     <div>
       <dialog id="my_modal_formInput" className="modal bg-black/50">
-        <div className="modal-box w-2/3 bg-gray-200 max-w-7xl overscroll-none">
+        <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">Form Data Booking</h3>
           <form onSubmit={formik.handleSubmit}>
             <div className="flex">

@@ -7,17 +7,49 @@ import { createBooking } from "../../config/Booked/bookingThunk";
 import { MdQuestionAnswer } from "react-icons/md";
 import emailjs from "@emailjs/browser";
 import dayjs from "dayjs";
-import { useNavigate, useParams } from "react-router-dom";
-import { useOfficesByIDSelector } from "../../config/BookingOffice/officesSelector";
+
+import { useNavigate } from "react-router-dom";
 
 const ModalBooking = ({ booking }) => {
   const { user } = useContext(UserContext);
   const [token, setToken] = useState(null);
 
-  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const officeData = useOfficesByIDSelector();
+
+  const sendEmail = async () => {
+    try {
+      // Create a form element
+      const form = document.createElement("form");
+      // Add input fields for each property in the data
+      const inputData = {
+        penanggungjawab: booking.penanggungjawab,
+        gedung: "ARJUNA",
+        namaKegiatan: booking.namaKegiatan,
+        dateTime: dayjs(booking.dateTime).format("DD MMMM YYYY"),
+      };
+
+      Object.keys(inputData).forEach((key) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = inputData[key];
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+
+      await emailjs.sendForm(
+        "service_s3n1ppe",
+        "template_hwtabpm",
+        form,
+        "XeSkKCtKDKKBnm10x"
+      );
+      console.log("Email sent successfully!");
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -27,10 +59,12 @@ const ModalBooking = ({ booking }) => {
       phone: booking?.phone || "",
       totalPay: booking.price || "",
       order_id: booking.order_id || "",
+      id: booking.office || "",
     },
     onSubmit: async (values) => {
       if (booking.price === 0) {
         dispatch(createBooking(booking));
+        sendEmail();
         navigate("/mybooking");
       } else {
         document.getElementById("modal_payment").close();

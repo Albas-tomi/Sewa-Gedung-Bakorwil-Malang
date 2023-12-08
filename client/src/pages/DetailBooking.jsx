@@ -1,11 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { formatRupiah } from "../rpFormatter";
-import BookingDate from "../components/detailMyBooking/BookingDate";
 import GalleryOffice from "../components/detailOffice/GalleryOffice";
-import CardMyBooking from "../components/mybooking/CardMyBooking";
 import CardDetailBooking from "../components/detailMyBooking/CardDetailBooking";
 
 const DetailBooking = () => {

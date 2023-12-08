@@ -28,7 +28,6 @@ const ListOffices = () => {
   useEffect(() => {
     dispatch(retrieveOffices());
   }, []);
-  console.log(offices);
   return (
     <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3  gap-x-4 gap-y-8 mt-4 px-3 ">
       {offices.length > 0 &&
@@ -46,7 +45,9 @@ const ListOffices = () => {
               ))}
             </Carousel>
             <Link to={"/office/" + data._id}>
-              <h3 className=" font-bold">{data.title}</h3>
+              <h3 className=" font-bold hover:text-gray-400 duration-300">
+                {data.title}
+              </h3>
               <h2 className="text-sm truncate text-gray-600">
                 {data.extraInfo}
               </h2>

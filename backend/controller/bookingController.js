@@ -2,7 +2,6 @@ import Booking from "../models/booking.js";
 import jwt from "jsonwebtoken";
 import fs from "fs";
 import midtransClient from "midtrans-client";
-import User from "../models/user.js"; // Import your User model
 import Payment from "../models/payment.js";
 import path from "path";
 
@@ -45,8 +44,8 @@ export const deletePhotoKtp = (req, res) => {
   });
 };
 // ====== DELETE ==========
-// ====== UPLOAD KTP USER ==========
 
+// ====== UPLOAD KTP USER ==========
 // ====== UPLOAD SURAT PERMOHONAN USER ==========
 export const uploadSuratPermohonan = (req, res) => {
   // UPLOAD FILE MEMORY
@@ -75,9 +74,7 @@ export const deleteSuratPermohonan = (req, res) => {
   });
 };
 // ====== DELETE ==========
-// ====== UPLOAD SURAT PERMOHONAN USER ==========
 
-// ====== UPLOAD SURAT PERMOHONAN USER ==========
 export const uploadPoster = (req, res) => {
   // UPLOAD FILE MEMORY
   const uploadedPoster = [];
@@ -100,16 +97,16 @@ export const deletePoster = (req, res) => {
       console.error("Error deleting file: ", err);
       return res.status(500).json({ message: "Failed to delete file" });
     }
-    console.log(`File '${fileName}' deleted successfully.`);
+    console.log(`File '${fileName}'deleted successfully.`);
     res.status(200).json({ message: "File deleted successfully" });
   });
 };
 // ====== DELETE ==========
+
 // ====== UPLOAD SURAT PERMOHONAN USER ==========
 
 export const makeBookingOffice = async (req, res) => {
   const userData = await getDataUserFromReq(req);
-  console.log(userData);
   const {
     office,
     namaKegiatan,
@@ -122,12 +119,14 @@ export const makeBookingOffice = async (req, res) => {
     lembaga,
     alamatLembaga,
     KTPUser,
+    catatanTambahan,
     jenisPembayaran,
     suratPermohonan,
     posterKegiatan,
     dateTime,
     startTime,
     endTime,
+    email,
     phone,
     price,
     order_id,
@@ -140,12 +139,14 @@ export const makeBookingOffice = async (req, res) => {
       jumlahPeserta,
       jenisPembayaran,
       penanggungjawab,
+      catatanTambahan,
       tujuanKegiatan,
       latarBelakang,
       statusDiterima,
       sasaranKegiatan,
       lembaga,
       alamatLembaga,
+      email,
       KTPUser,
       suratPermohonan,
       posterKegiatan,
@@ -167,6 +168,7 @@ export const makeBookingOffice = async (req, res) => {
     res.json(error.message);
   }
 };
+
 export const adminMakeBookingOffice = async (req, res) => {
   const {
     office,
@@ -179,7 +181,9 @@ export const adminMakeBookingOffice = async (req, res) => {
     sasaranKegiatan,
     lembaga,
     alamatLembaga,
+    email,
     KTPUser,
+    catatanTambahan,
     jenisPembayaran,
     suratPermohonan,
     posterKegiatan,
@@ -204,6 +208,8 @@ export const adminMakeBookingOffice = async (req, res) => {
       sasaranKegiatan,
       lembaga,
       alamatLembaga,
+      email,
+      catatanTambahan,
       KTPUser,
       suratPermohonan,
       posterKegiatan,
@@ -231,7 +237,6 @@ export const getDataMyBookings = async (req, res) => {
   const bookingData = await Booking.find({ user: userData.id }).populate(
     "office"
   );
-
   const response = {
     userName: userNameBooked,
     bookingData: bookingData,
@@ -262,8 +267,7 @@ export const getBookings = async (req, res) => {
 };
 
 export const editBooking = async (req, res) => {
-  const id = req.params.id; // Assuming 'id' is specified in the route params
-
+  const id = req.params.id;
   const {
     office,
     namaKegiatan,
@@ -276,6 +280,7 @@ export const editBooking = async (req, res) => {
     lembaga,
     jenisPembayaran,
     alamatLembaga,
+    catatanTambahan,
     KTPUser,
     suratPermohonan,
     posterKegiatan,
@@ -305,6 +310,7 @@ export const editBooking = async (req, res) => {
       statusDiterima,
       lembaga,
       alamatLembaga,
+      catatanTambahan,
       KTPUser,
       suratPermohonan,
       posterKegiatan,
@@ -348,6 +354,17 @@ export const bayarTagihan = async (req, res) => {
         order_id: req.body.order_id,
         gross_amount: req.body.totalPay,
       },
+      item_details: [
+        {
+          id: req.body.id,
+          price: req.body.totalPay,
+          quantity: 1,
+          name: "Gedung",
+          brand: "Sewa Kawis Bakorwil 3 Malang",
+          category: "Gedung",
+          merchant_name: "Sewa Kawis",
+        },
+      ],
       customer_details: {
         first_name: req.body.nameOrder,
         phone: req.body.phone,

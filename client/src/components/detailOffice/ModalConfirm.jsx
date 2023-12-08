@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { MdQuestionAnswer } from "react-icons/md";
 import { createBooking } from "../../config/Booked/bookingThunk";
@@ -16,7 +16,6 @@ const ModalConfirm = ({ booking }) => {
 
   const sendEmail = async () => {
     try {
-      // Fetch officeData
       await dispatch(retrieveOfficeById(id));
 
       // Check if officeData is available and has the 'title' property
@@ -42,8 +41,6 @@ const ModalConfirm = ({ booking }) => {
       });
 
       document.body.appendChild(form);
-
-      // Use sendForm with the dynamically created form
       await emailjs.sendForm(
         "service_s3n1ppe",
         "template_hwtabpm",

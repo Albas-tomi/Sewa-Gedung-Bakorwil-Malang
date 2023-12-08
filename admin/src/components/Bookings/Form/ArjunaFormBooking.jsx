@@ -43,6 +43,7 @@ const ArjunaFormBooking = ({ bookingData }) => {
       endTime: "",
       phone: "",
       price: 0,
+      email: "",
       statusDiterima: true,
       jenisPembayaran: paymentOption,
       order_id: `order_${uuidv4()}`,
@@ -75,7 +76,7 @@ const ArjunaFormBooking = ({ bookingData }) => {
   return (
     <div>
       <dialog id="my_modal_formInputArjuna" className="modal bg-black/50">
-        <div className="modal-box w-2/3 bg-gray-200 max-w-7xl overscroll-none">
+        <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">Form Data Booking</h3>
           <form onSubmit={formik.handleSubmit}>
             <div className="flex">
@@ -150,6 +151,26 @@ const ArjunaFormBooking = ({ bookingData }) => {
                     value={formik.values.lembaga}
                     type="text"
                     placeholder="Instansi/Lembaga/Komunitas"
+                    className="input my-2 input-bordered input-sm w-full "
+                  />
+                  <input
+                    name="phone"
+                    id="phone"
+                    onChange={formik.handleChange}
+                    value={formik.values.phone}
+                    type="text"
+                    placeholder="No Tlpn."
+                    className="input my-2 input-bordered input-sm w-full "
+                  />
+
+                  <input
+                    name="email"
+                    required
+                    id="email"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                    type="text"
+                    placeholder="email"
                     className="input my-2 input-bordered input-sm w-full "
                   />
 

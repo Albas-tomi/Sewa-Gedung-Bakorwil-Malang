@@ -26,12 +26,6 @@ db.once("open", () => console.log("Database connected..."));
 
 const app = express();
 
-// AGAR STATIC FILE BISA DI AKSES
-app.use("/uploads/", express.static(__dirname + "/uploads"));
-app.use(express.urlencoded({ extended: true }));
-
-app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
@@ -39,6 +33,13 @@ app.use(
   })
 );
 
+app.options("*", cors());
+// AGAR STATIC FILE BISA DI AKSES
+app.use("/uploads/", express.static(__dirname + "/uploads"));
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
+app.use(cookieParser());
 app.use(OfficeRoute);
 app.use(UserRoute);
 app.use(BookingRoute);

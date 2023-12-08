@@ -1,6 +1,5 @@
 import React from "react";
 import { AiFillBank } from "react-icons/ai";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { MdOutlineChair } from "react-icons/md";
 import { FaPeopleCarry } from "react-icons/fa";
 import { FaPeoplePulling } from "react-icons/fa6";
@@ -11,14 +10,6 @@ import { TbAirConditioning } from "react-icons/tb";
 import Carousel from "react-multi-carousel";
 
 const Fasilitas = () => {
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 5,
-      slidesToSlide: 1, // optional, default to 1.
-    },
-  };
-
   return (
     <>
       <Carousel

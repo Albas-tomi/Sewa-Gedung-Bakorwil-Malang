@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import BookingWidget from "./BookingWidget";
 import GalleryOffice from "./GalleryOffice";
@@ -20,6 +19,7 @@ const ListDetailOffice = () => {
   }, [id]);
 
   if (!office) return "";
+
   return (
     <div className="mt-4 md:mx-3 bg-gray-100 -mx-8 px-8 py-8">
       <h1 className="text-3xl">{office.title}</h1>

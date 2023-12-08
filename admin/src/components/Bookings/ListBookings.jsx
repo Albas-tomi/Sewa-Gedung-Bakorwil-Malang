@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   useBookingLoadingSelector,
@@ -23,6 +23,9 @@ import ArjunaEditForm from "./Form/ArjunaEditFrom";
 import ConfirmModal from "./ConfirmModal";
 import ConfirmTolakModal from "./ConfirmTolakModal";
 import ConfirmDelete from "./ConfirmDelete";
+import DetailModal from "./DetailModal";
+import ConfirmCancelPermohonan from "./ConfirmCancelPermohonan";
+import { formatRupiah } from "../../../rpFormatter";
 
 const ListBookings = () => {
   const { id } = useParams();
@@ -34,6 +37,8 @@ const ListBookings = () => {
   const [idSelected, setIdSelected] = useState(null);
   const [idDiterima, setIdDiterima] = useState(null);
   const [idDelete, setIdDelete] = useState(null);
+
+  const path = location.pathname.split("/")[1];
 
   // CEK APAKAH DATANYA BERUPA  ARRAY
   const bookingDataArray = Array.isArray(bookingData) ? bookingData : [];
@@ -78,20 +83,18 @@ const ListBookings = () => {
             <th>Nama Kegiatan</th>
             <th>Tanggal / Jam</th>
             <th>Tempat</th>
-            <th className={id === "65534727b0b193dc7e590891" ? "hidden" : ""}>
-              Lembaga
-            </th>
-            <th className={id !== "65534727b0b193dc7e590891" ? "hidden" : ""}>
-              Pembayaran
-            </th>
+            <th className={path === "arjuna" ? "hidden" : ""}>Lembaga</th>
+            <th className={path !== "arjuna" ? "hidden" : ""}>Pembayaran</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         {isLoading === true && (
-          <tr className=" ml-16 relative left-96  flex justify-center w-full bottom-1/2 ">
-            <span className="loading  text-blue-500 loading-bars loading-lg "></span>
-          </tr>
+          <tbody>
+            <tr className=" ml-16 relative left-96  flex justify-center w-full bottom-1/2 ">
+              <td className="loading  text-blue-500 loading-bars loading-lg "></td>
+            </tr>
+          </tbody>
         )}
         <tbody>
           {bookingDataArray
@@ -104,25 +107,21 @@ const ListBookings = () => {
                 <td className="">
                   {dayjs(data.dateTime).format("DD-MMM-YYYY")}
                   <br />
-                  <span className="text-xs font-bold">
+                  <p className="text-xs font-bold">
                     {dayjs(data.startTime).format("HH:mm")} -{" "}
                     {dayjs(data.endTime).format("HH:mm")}
-                  </span>
+                  </p>
                 </td>
                 <td className="font-bold text-lg">
                   {officeDataArray
                     .filter((data) => data._id === id)
                     .map((data) => data.title)}
                 </td>
-                <td
-                  className={id === "65534727b0b193dc7e590891" ? "hidden" : ""}
-                >
+                <td className={path === "arjuna" ? "hidden" : ""}>
                   {data.lembaga}
                 </td>
-                <td
-                  className={id !== "65534727b0b193dc7e590891" ? "hidden" : ""}
-                >
-                  {data.jenisPembayaran}
+                <td className={path !== "arjuna" ? "hidden" : ""}>
+                  {formatRupiah(data.jenisPembayaran)}
                 </td>
                 <td>
                   {data.statusDiterima === false ? (
@@ -151,7 +150,20 @@ const ListBookings = () => {
                       </button>
                     </div>
                   ) : data.statusDiterima === true ? (
-                    "DITERIMA"
+                    <div>
+                      <button
+                        onClick={() => {
+                          setIdDiterima(data._id);
+                          document
+                            .getElementById("konfirmasi_cancel")
+                            .showModal();
+                        }}
+                        className="btn btn-warning btn-xs mx-2"
+                      >
+                        Cancel
+                      </button>
+                      Diterima
+                    </div>
                   ) : (
                     "DITOLAK"
                   )}
@@ -160,7 +172,7 @@ const ListBookings = () => {
                   <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => {
-                        if (id === "65534727b0b193dc7e590891") {
+                        if (path === "arjuna") {
                           document
                             .getElementById("my_modal_formEditArjuna")
                             .showModal();
@@ -186,7 +198,13 @@ const ListBookings = () => {
                       Hapus
                     </button>
 
-                    <button className="btn btn-outline btn-info btn-xs">
+                    <button
+                      onClick={() => {
+                        setIdSelected(data._id);
+                        document.getElementById("detailBooking").showModal();
+                      }}
+                      className="btn btn-outline btn-info btn-xs"
+                    >
                       Detail
                     </button>
                   </div>
@@ -201,6 +219,11 @@ const ListBookings = () => {
         idDiterima={idDiterima}
         setIdDiterima={setIdDiterima}
       />
+      <ConfirmCancelPermohonan
+        idDiterima={idDiterima}
+        setIdDiterima={setIdDiterima}
+      />
+      <DetailModal idSelected={idSelected} setIdSelected={setIdSelected} />
       <ConfirmDelete idDelete={idDelete} />
       <FormBooking bookingData={bookingDataArray} />
       <FormEditBooking idSelected={idSelected} bookingData={bookingDataArray} />

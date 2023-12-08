@@ -5,11 +5,10 @@ import { retrieveMyBooking } from "../../config/Booked/bookingThunk";
 import { formatRupiah } from "../../rpFormatter";
 import dayjs from "dayjs";
 import { FcMoneyTransfer, FcOvertime, FcClock } from "react-icons/fc";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
 const CardMyBooking = () => {
-  const { id } = useParams();
   const myBooked = useMybookingSelector();
   const dispatch = useDispatch();
   useEffect(() => {

@@ -23,6 +23,7 @@ const FormEditBooking = ({ bookingData, idSelected }) => {
   const [photoKtp, setPhotoKtp] = useState([]);
   const [suratPermohonan, setSuratPermohonan] = useState([]);
   const [poster, setPoster] = useState([]);
+
   const notify = () => {
     toast.success("Berhasil Edit Data  !", {
       position: toast.POSITION.TOP_CENTER,
@@ -114,7 +115,7 @@ const FormEditBooking = ({ bookingData, idSelected }) => {
   return (
     <div>
       <dialog id="my_modal_formEditInput" className="modal bg-black/50">
-        <div className="modal-box w-2/3 bg-gray-200 max-w-7xl overscroll-none">
+        <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">Form Data Booking Edit</h3>
           <form onSubmit={formik.handleSubmit}>
             <div className="flex">

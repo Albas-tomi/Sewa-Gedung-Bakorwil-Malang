@@ -14,10 +14,14 @@ export const getSelectedTimeRange = (selectedStartTime, selectedEndTime) => {
 };
 
 // MENDAPATKAN JAM PADA HARI YANG DIPILIH ============
-export const getTimes = (selectedDate) => {
+export const getTimes = ({ selectedDate, id }) => {
   if (!selectedDate) return [];
   const startTime = new Date(selectedDate);
-  startTime.setHours(8, 0);
+  if (id === "65534727b0b193dc7e590891") {
+    startTime.setHours(7, 0);
+  } else {
+    startTime.setHours(8, 0);
+  }
   const endTime = new Date(selectedDate);
   endTime.setHours(16, 0);
   const interval = 60;

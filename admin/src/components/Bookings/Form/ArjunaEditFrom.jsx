@@ -17,7 +17,7 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedStartTime, setSelectedStartTime] = useState(null);
   const [selectedEndTime, setSelectedEndTime] = useState(null);
-  const [paymentOption, setPaymentOption] = useState(undefined);
+  const [paymentOption, setPaymentOption] = useState(0);
 
   const notify = () => {
     toast.success("Berhasil Edit Data  !", {
@@ -76,12 +76,14 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
       price: dataEditSelected.price || "",
       order_id: dataEditSelected.order_id || "",
       jenisPembayaran: dataEditSelected.jenisPembayaran || "",
+      email: dataEditSelected.email || "",
     },
     onSubmit: async (values, { resetForm }) => {
       values.office = id;
       values.dateTime = selectedDate;
       values.startTime = selectedStartTime;
       values.endTime = selectedEndTime;
+      values.price = paymentOption;
       values.statusDiterima = dataEditSelected.statusDiterima;
       values.jenisPembayaran = paymentOption;
       handleEditBooking(values);
@@ -97,7 +99,7 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
   return (
     <div>
       <dialog id="my_modal_formEditArjuna" className="modal bg-black/50">
-        <div className="modal-box w-2/3 bg-gray-200 max-w-7xl overscroll-none">
+        <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">Form Data Booking Edit</h3>
           <form onSubmit={formik.handleSubmit}>
             <div className="flex">
@@ -128,6 +130,7 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                     <input
                       name="namaKegiatan"
                       id="namaKegiatan"
+                      required
                       onChange={formik.handleChange}
                       value={formik.values.namaKegiatan}
                       type="text"
@@ -138,6 +141,7 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                       type="number"
                       name="jumlahPeserta"
                       id="jumlahPeserta"
+                      required
                       onChange={formik.handleChange}
                       value={formik.values.jumlahPeserta}
                       min={5}
@@ -148,6 +152,7 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
 
                   <input
                     type="text"
+                    required
                     name="penanggungjawab"
                     id="penanggungjawab"
                     onChange={formik.handleChange}
@@ -161,6 +166,7 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                     id="tujuanKegiatan"
                     onChange={formik.handleChange}
                     value={formik.values.tujuanKegiatan}
+                    required
                     type="text"
                     placeholder="Tujuan Kegiatan"
                     className="input input-bordered my-2 input-sm w-full "
@@ -172,7 +178,27 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                     onChange={formik.handleChange}
                     value={formik.values.lembaga}
                     type="text"
+                    required
                     placeholder="Instansi/Lembaga/Komunitas"
+                    className="input my-2 input-bordered input-sm w-full "
+                  />
+                  <input
+                    name="phone"
+                    id="phone"
+                    onChange={formik.handleChange}
+                    value={formik.values.phone}
+                    type="text"
+                    placeholder="No Tlpn."
+                    className="input my-2 input-bordered input-sm w-full "
+                  />
+                  <input
+                    name="email"
+                    required
+                    id="email"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                    type="text"
+                    placeholder="email"
                     className="input my-2 input-bordered input-sm w-full "
                   />
                   <textarea
@@ -193,10 +219,10 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                           id="payment_50"
                           name="paymentOption"
                           className="radio"
-                          value="DP Rp.1.750.000"
-                          checked={paymentOption === "DP Rp.1.750.000"}
+                          value="1750000"
+                          checked={paymentOption === 1750000}
                           required
-                          onChange={() => setPaymentOption("DP Rp.1.750.000")}
+                          onChange={() => setPaymentOption(1750000)}
                         />
                         <label className="text-xs" htmlFor="payment_50">
                           50% DP Rp.1.750.000
@@ -208,10 +234,10 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                           id="payment_full"
                           name="paymentOption"
                           className="radio"
-                          value="Lunas"
+                          value="3500000"
                           required
-                          checked={paymentOption === "Lunas"}
-                          onChange={() => setPaymentOption("Lunas")}
+                          checked={paymentOption === 3500000}
+                          onChange={() => setPaymentOption(3500000)}
                         />
                         <label className="text-xs" htmlFor="payment_full">
                           Pembayaran Penuh Rp.3.500.000
@@ -223,10 +249,10 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                           id="payment_25"
                           name="paymentOption"
                           className="radio"
-                          value="DP Rp.200.000"
+                          value="200.000"
                           required
-                          checked={paymentOption === "DP Rp.200.000"}
-                          onChange={() => setPaymentOption("DP Rp.200.000")}
+                          checked={paymentOption === 200000}
+                          onChange={() => setPaymentOption(200000)}
                         />
                         <label className="text-xs" htmlFor="payment_25">
                           DP Rp.200.000
@@ -238,10 +264,10 @@ const ArjunaEditForm = ({ bookingData, idSelected }) => {
                           id="payment_25"
                           name="paymentOption"
                           className="radio"
-                          value="Tanpa DP"
+                          value="0"
                           required
-                          checked={paymentOption === "Tanpa DP"}
-                          onChange={() => setPaymentOption("Tanpa DP")}
+                          checked={paymentOption === 0}
+                          onChange={() => setPaymentOption(0)}
                         />
                         <label className="text-xs" htmlFor="payment_25">
                           Pengajuan Permohonan Tanpa DP
