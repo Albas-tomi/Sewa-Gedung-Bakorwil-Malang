@@ -5,6 +5,7 @@ import { useBookingSelector } from "../../config/booking/bookingUseSelector";
 import dayjs from "dayjs";
 import { retrieveOffices } from "../../config/offices/officesThunk";
 import { useOfficesSelector } from "../../config/offices/officesSelector";
+import { retrieveUsers } from "../../config/users/userThunk";
 
 const ListBookings = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const ListBookings = () => {
 
   useEffect(() => {
     dispatch(retrieveBooking());
+    dispatch(retrieveUsers());
     dispatch(retrieveOffices());
   }, []);
   return (

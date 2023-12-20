@@ -21,26 +21,26 @@ const CenterNavbar = () => {
         <span>|</span>
         <li
           className={` ${
-            path == "mybooking" ? "border-black" : "border-white"
+            path == "pesanan-saya" ? "border-black" : "border-white"
           } hover:border-black border-b-2 duration-400  `}
         >
-          <Link to={!user ? "/login" : "/mybooking"}>Pesanan Saya</Link>
+          <Link to={!user ? "/login" : "/pesanan-saya"}>Pesanan Saya</Link>
         </li>
         <span>|</span>
         <li
           className={`hover:border-black border-b-2   ${
-            path == "about" ? "border-black" : "border-white"
+            path == "tentang-kami" ? "border-black" : "border-white"
           } duration-400`}
         >
-          <a href="">Tentang Kami</a>
+          <Link to={"/tentang-kami"}>Tentang Kami</Link>
         </li>
         <span>|</span>
         <li
           className={`hover:border-black border-b-2   ${
-            path == "about" ? "border-black" : "border-white"
+            path == "kontak-kami" ? "border-black" : "border-white"
           } duration-400`}
         >
-          <a href="">Kontak</a>
+          <Link to={"/kontak-kami"}>Kontak</Link>
         </li>
       </ul>
     </div>

@@ -12,6 +12,8 @@ import DetailBooking from "./pages/DetailBooking";
 import Register from "./pages/Register";
 import "react-multi-carousel/lib/styles.css";
 import WhatsAppsAdmin from "./components/WhatsAppsAdmin";
+import ContactUs from "./pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
@@ -25,9 +27,11 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/todo" element={<TodoList />} />
-          <Route path="/mybooking" element={<MyBooking />} />
+          <Route path="/pesanan-saya" element={<MyBooking />} />
           <Route path="/mybooking/:id" element={<DetailBooking />} />
           <Route path="/office/:id" element={<DetailOffice />} />
+          <Route path="/kontak-kami" element={<ContactUs />} />
+          <Route path="/tentang-kami" element={<AboutUs />} />
         </Route>
       </Routes>
     </UserContextProvider>

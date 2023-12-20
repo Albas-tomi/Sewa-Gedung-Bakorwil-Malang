@@ -1,14 +1,17 @@
 import React from "react";
+import LogoKawis from "../../assets/img/Sewa_Kawis-removebg-preview.png";
 
 const Footer = () => {
   return (
-    <footer className="footer footer-center p-10 bg-base-100 shadow-sm border-t py-2 mt-2 border-gray-200 text-base-content rounded">
-      <nav className="grid grid-flow-col gap-4">
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
-      </nav>
+    <footer className="footer footer-center p-10 bg-[#65c3c8] mt-5 text-primary-content">
+      <aside>
+        <img src={LogoKawis} alt="Logo" className="w-20" />
+        <p className="font-bold text-white">
+          Badan Koordinasi Wilayah Pemerintahan 3 Malang. <br />
+          ForEach "Muhammad Al Bastomi" 2023
+        </p>
+        <p className="text-white">Copyright © 2023 - All right reserved</p>
+      </aside>
       <nav>
         <div className="grid grid-flow-col gap-4">
           <a>
@@ -46,9 +49,6 @@ const Footer = () => {
           </a>
         </div>
       </nav>
-      <aside>
-        <p>Copyright © 2023 - All right ForEach.</p>
-      </aside>
     </footer>
   );
 };
