@@ -29,17 +29,15 @@ const DetailBooking = () => {
         <div>DATA KOSONG</div>
       ) : (
         <div className="m-3 ">
-          <h1 className="text-3xl">{booking.office.title}</h1>
-          <a className="my-2 block font-semibold underline">
-            {booking.office.address}
+          <h1 className="text-3xl font-semibold">{booking.office.title}</h1>
+          <a className="my-2 block font-semibold text-gray-500">
+            {booking.office.extraInfo}
           </a>
           <div className="bg-gray-200 flex-col flex justify-around md:justify-start p-1  items-center  my-4 rounded-2xl ">
             <h2 className="text-2xl font-bold ">Informasi Booking</h2>
             <CardDetailBooking booking={booking} />
           </div>
-          <div className="relative">
-            <GalleryOffice office={booking.office} />
-          </div>
+          <GalleryOffice office={booking.office} />
         </div>
       )}
     </div>

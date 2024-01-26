@@ -12,9 +12,9 @@ const HeaderUsers = () => {
       <div className="flex gap-4 justify-center items-center">
         <FaUsers className="text-blue-500 text-2xl" />
         <GrNext className="text-sm" />
-        <span className="text-gray-600">Offices</span>
-        <button>
-          <HiOutlineViewGridAdd className="text-3xl duration-300 hover:text-blue-700" />
+        <span className="text-gray-600">Users</span>
+        <button disabled>
+          <HiOutlineViewGridAdd className="text-3xl duration-300 text-gray-400" />
         </button>
       </div>
     </div>

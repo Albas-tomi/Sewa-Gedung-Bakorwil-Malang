@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { formatRupiah } from "../../rpFormatter";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
 import { useBookingSelector } from "../../config/Booked/bookingSelector";
 import "react-calendar/dist/Calendar.css";
 import ModalBooking from "./ModalBooking";
@@ -17,6 +16,7 @@ import ModalConfirm from "./ModalConfirm";
 
 const BookingWidget = ({ office }) => {
   const { id } = useParams();
+
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const bookingData = useBookingSelector();
@@ -74,7 +74,7 @@ const BookingWidget = ({ office }) => {
         values.posterKegiatan = poster;
         values.jenisPembayaran = paymentOption;
 
-        if (office.title === "Gedung Arjuna") {
+        if (office.paidOffice === true) {
           setBooking(values);
           document.getElementById("modal_payment").show();
         } else {
@@ -98,8 +98,8 @@ const BookingWidget = ({ office }) => {
   return (
     <div className="bg-white mt-2  shadow p-4 rounded-2xl">
       <div className="text-xl text-center">
-        {id === "65534727b0b193dc7e590891" ? (
-          <span>Price : {formatRupiah(office.price)} / Kegiatan</span>
+        {office.title?.toLowerCase().includes("arjuna") ? (
+          <span>Harga : {formatRupiah(office.price)} / 8 Jam</span>
         ) : (
           <span className="my-2 ">
             Gratis Selama 4 Jam / <br /> Lebih Syarat dan Ketentuan Berlaku
@@ -112,7 +112,7 @@ const BookingWidget = ({ office }) => {
       >
         <div className="border  bg-white rounded-2xl">
           <div className="flex justify-around">
-            {office.title === "Gedung Arjuna" ? (
+            {office.title?.toLowerCase().includes("arjuna") ? (
               <ReactCalendar
                 view="month"
                 minDate={new Date()}
@@ -234,7 +234,7 @@ const BookingWidget = ({ office }) => {
               id="email"
               onChange={formik.handleChange}
               value={formik.values.email}
-              placeholder="No Tlp."
+              placeholder="Email"
               className="input my-2 input-bordered input-sm w-full "
             />
             {formik.errors.email && formik.touched.email && (
@@ -291,7 +291,14 @@ const BookingWidget = ({ office }) => {
                   {formik.errors.catatanTambahan}
                 </p>
               )}
-            {office.title === "Gedung Arjuna" && (
+            {/* KTP UPLOADER */}
+            <KtpUploader
+              formik={formik}
+              setPhotoKtp={setPhotoKtp}
+              photoKtp={photoKtp}
+            />
+            {/* KTP UPLOADER */}
+            {office.paidOffice === true && (
               <div className={office.title !== "Gedung Arjuna" ? "hidden" : ""}>
                 <label className="font-bold">Pilih Jumlah Bayar :</label>
                 <div className="grid grid-cols-2 mt-3 items-center gap-3">
@@ -358,7 +365,7 @@ const BookingWidget = ({ office }) => {
                 </div>
               </div>
             )}
-            {office.title !== "Gedung Arjuna" && (
+            {office.paidOffice !== true && (
               <div>
                 <textarea
                   name="latarBelakang"
@@ -381,13 +388,6 @@ const BookingWidget = ({ office }) => {
                   className="input my-2 input-bordered input-sm w-full "
                 />
 
-                {/* KTP UPLOADER */}
-                <KtpUploader
-                  formik={formik}
-                  setPhotoKtp={setPhotoKtp}
-                  photoKtp={photoKtp}
-                />
-                {/* KTP UPLOADER */}
                 {/* SURAT PERMOHONAN UPLOADER */}
                 <SuratPermohonanUploader
                   suratPermohonan={suratPermohonan}

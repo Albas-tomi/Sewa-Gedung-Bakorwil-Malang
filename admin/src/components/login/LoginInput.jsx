@@ -27,7 +27,7 @@ const LoginInput = () => {
         const data = await axios.post("/admin-login", values);
         setUser(data.data);
         alert("berhasil login");
-        navigate("/dashboard");
+        navigate("/beranda");
         window.location.reload();
       } catch (error) {
         alert("gagal login");
@@ -70,6 +70,7 @@ const LoginInput = () => {
                   >
                     Email
                   </label>
+                  <span className="label-text-alt">Top Right label</span>
                 </div>
                 {formik.errors.email && formik.touched.email && (
                   <p className="mt-1 text-red-500 max-[640px]:text-sm">

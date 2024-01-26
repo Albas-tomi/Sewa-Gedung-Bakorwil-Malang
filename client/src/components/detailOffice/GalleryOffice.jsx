@@ -8,7 +8,7 @@ const GalleryOffice = ({ office }) => {
     return (
       <div
         key={office._id}
-        className="absolute z-10 inset-0 bg-black text-white  min-h-screen"
+        className="absolute w-full z-10 inset-0 bg-black text-white  min-h-screen"
       >
         <div className="p-8 bg-black grid gap-4">
           <div>

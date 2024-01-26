@@ -6,6 +6,7 @@ const Office = new mongoose.Schema({
   address: { type: String, required: true },
   photos: [String],
   description: String,
+  paidOffice: Boolean,
   extraInfo: String,
   catatan: String,
   fasilitas: String,

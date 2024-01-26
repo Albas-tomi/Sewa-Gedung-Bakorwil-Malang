@@ -1,60 +1,153 @@
 import React from "react";
 import dayjs from "dayjs";
-import { FcMoneyTransfer, FcOvertime, FcClock } from "react-icons/fc";
-import { FaLongArrowAltRight } from "react-icons/fa";
 import { formatRupiah } from "../../rpFormatter";
+import { Link } from "react-router-dom";
+import { CgDetailsMore } from "react-icons/cg";
+import { CiCalendarDate, CiClock2 } from "react-icons/ci";
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { MdOutlinePayment } from "react-icons/md";
+import { MdDriveFileRenameOutline } from "react-icons/md";
+import CardGalleryMyBooking from "../mybooking/CardGalleryMyBooking";
+import { RxActivityLog } from "react-icons/rx";
+import ModalCancel from "../mybooking/ModalCancel";
+import ModalUbahTanggal from "../mybooking/ModalUbahTanggal";
+import { useMybookingSelector } from "../../config/Booked/bookingSelector";
 
 const CardDetailBooking = ({ booking }) => {
+  const myBooked = useMybookingSelector();
+
+  if (!booking)
+    return (
+      <div className="w-full fixed overflow-hidden z-50 flex  justify-center bg-white h-screen">
+        <span className="loading loading-bars text-blue-400  w-1/12"></span>
+      </div>
+    );
+
   return (
     <>
       {
-        <div className="card relative flex md:max-h-96 flex-col mx-4 md:flex-row card-side bg-gray-100/95 shadow-sm my-2">
-          <div className="card-body ">
-            <h2 className="card-title">{booking.office.title}</h2>
-            <div className="flex items-center  gap-2">
-              <FcClock className="text-2xl" />
-              <p className="flex text-sm font-semibold items-center gap-3">
-                {dayjs(booking.startTime).format("HH:mm")}{" "}
-                <FaLongArrowAltRight className="text-blue-800" />{" "}
-                {dayjs(booking.endTime).format("HH:mm")}
-              </p>
-            </div>
-            <div className="flex gap-2  items-center">
-              <FcOvertime className="text-2xl" />
-              <p className="flex text-sm font-semibold items-center gap-3">
-                {dayjs(booking.dateTime).format("DD MMMM YYYY")}{" "}
-              </p>
-            </div>
-            <div>
-              <p className="text-lg font-medium">Total Pembayaran</p>
-              <div className="flex  mt-2 border-t-2 md:border-none md:mt-1 gap-3 items-center">
-                <FcMoneyTransfer className="text-2xl mt-1" />
-                <p className="font-semibold">{formatRupiah(booking.price)}</p>
-              </div>
-            </div>
-            <div>
-              <p className="text-lg font-medium">Catatan</p>
-              <div className="flex  mt-2 border-t-2 md:border-none md:mt-1 gap-3 items-center">
-                <p className="font-semibold">{booking.catatanTambahan}</p>
-              </div>
-            </div>
-          </div>
-          <div
-            className={`flex justify-center items-center text-center px-2 ${
-              booking?.statusDiterima !== true ? "hidden" : ""
-            }  -rotate-6 absolute right-20 top-16 md:top-14 border-2 border-green-600/30 w-1/2 md:w-1/6 py-2 `}
+        <div className="card flex flex-col sm:grid  sm:grid-cols-3 relative pt-2 mx-4 md:flex-row card-side border-b-2 border-gray-400 shadow-sm md:my-1 my-4">
+          <Link
+            to={`/pesanan-saya/${booking._id}`}
+            className="absolute cursor-pointer -z-10 left-3 top-2"
           >
-            <p className="text-white md:text-gray-500/50 font-bold text-xl">
-              PERMOHONAN DI TERIMA
-            </p>
+            <CgDetailsMore />
+          </Link>
+          <div className="absolute z-10 md:right-[5%] right-3  top-0">
+            {booking.statusDiterima === true ? (
+              <button className="btn btn-sm btn-success md:text-base text-white text-[8px]">
+                Diterima
+              </button>
+            ) : (
+              <button className="btn btn-sm btn-warning md:text-base text-white text-[8px]">
+                Menunggu konfirmasi
+              </button>
+            )}
           </div>
-          <figure className="md:w-1/4 ">
-            <img
-              className="h-full object-cover rounded-md"
-              src={`http://localhost:4000/uploads/office/${booking.office?.photos[0]}`}
-              alt="Pict"
-            />
-          </figure>
+          <div>
+            <Link
+              className="card-body  grid grid-cols-2 md:flex justify-center items-center "
+              to={`/pesanan-saya/${booking._id}`}
+            >
+              <figure className="flex  justify-center items-end ">
+                <img
+                  className=" w-11/12 sm:w-full  sm:h-[100%] h-[75%] rounded-md object-cover "
+                  src={`http://localhost:4000/uploads/office/${booking.office?.photos[0]}`}
+                  alt="Pict"
+                />
+              </figure>
+
+              {/* ========================= MOBILE =========================== */}
+              <div className="flex items-center md:hidden flex-col  gap-2">
+                <h2 className="card-title md:text-2xl  text-lg font-semibold">
+                  {booking.office.title}
+                </h2>
+                <div>
+                  <p className="flex text-xs md:text-base  font-semibold items-center gap-2 text-gray-400">
+                    <MdDriveFileRenameOutline className="text-xl " />
+                    {booking.namaKegiatan}
+                  </p>
+                  <p className="flex text-xs md:text-base  font-semibold items-center gap-2 text-gray-400">
+                    <RxActivityLog className="text-xl " />
+                    {booking.penanggungjawab}
+                  </p>
+
+                  <p className="flex text-xs md:text-base  font-semibold items-center gap-2 text-gray-400">
+                    <CiClock2 className="text-xl " />
+                    {dayjs(booking.startTime).format("HH:mm")}{" "}
+                    <IoIosArrowRoundForward className="" />{" "}
+                    {dayjs(booking.endTime).format("HH:mm")}
+                  </p>
+
+                  <p className="flex text-xs md:text-base font-semibold items-center gap-2 text-gray-400">
+                    <CiCalendarDate className="text-xl" />
+                    {dayjs(booking.dateTime).format("DD MMMM YYYY")}{" "}
+                  </p>
+
+                  <p className="flex text-xs md:text-base font-semibold items-center gap-2 text-gray-400">
+                    <MdOutlinePayment className="text-xl mt-1" />
+                    {formatRupiah(booking.price)}
+                  </p>
+                </div>
+              </div>
+              {/* ========================= MOBILE =========================== */}
+            </Link>
+          </div>
+          <div className=" sm:flex-col flex justify-center gap-4 p-3">
+            <div className="md:flex items-center hidden flex-col  gap-2">
+              <h2 className="card-title md:text-2xl text-lg font-semibold">
+                {booking.office.title}
+              </h2>
+              <div>
+                <p className="flex text-xs md:text-base  font-semibold items-center gap-2 text-gray-400">
+                  <MdDriveFileRenameOutline className="text-xl " />
+                  {booking.namaKegiatan}
+                </p>
+                <p className="flex text-xs md:text-base  font-semibold items-center gap-2 text-gray-400">
+                  <RxActivityLog className="text-xl " />
+                  {booking.penanggungjawab}
+                </p>
+
+                <p className="flex text-xs md:text-base  font-semibold items-center gap-2 text-gray-400">
+                  <CiClock2 className="text-xl " />
+                  {dayjs(booking.startTime).format("HH:mm")}{" "}
+                  <IoIosArrowRoundForward className="" />{" "}
+                  {dayjs(booking.endTime).format("HH:mm")}
+                </p>
+
+                <p className="flex text-xs md:text-base font-semibold items-center gap-2 text-gray-400">
+                  <CiCalendarDate className="text-xl" />
+                  {dayjs(booking.dateTime).format("DD MMMM YYYY")}{" "}
+                </p>
+
+                <p className="flex text-xs md:text-base font-semibold items-center gap-2 text-gray-400">
+                  <MdOutlinePayment className="text-xl mt-1" />
+                  {formatRupiah(booking.price)}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                document.getElementById("modal_reschedule").showModal();
+              }}
+              className="btn  btn-sm btn-active btn-primary"
+            >
+              Ubah Jadwal
+            </button>
+            <button
+              onClick={() => {
+                document.getElementById("modal_cancel").showModal();
+              }}
+              className="btn  btn-sm btn-outline btn-error"
+            >
+              Pembatalan
+            </button>
+          </div>
+          <div className="p-8 hidden md:block ">
+            <CardGalleryMyBooking office={booking.office} />
+          </div>
+          <ModalCancel idSelected={booking._id} myBooked={myBooked} />
+          <ModalUbahTanggal idSelected={booking._id} myBooked={myBooked} />
         </div>
       }
     </>

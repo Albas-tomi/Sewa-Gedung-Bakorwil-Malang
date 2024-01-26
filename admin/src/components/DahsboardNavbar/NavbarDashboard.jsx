@@ -11,15 +11,15 @@ const NavbarDashboard = () => {
 
   const currentPage = useMemo(() => {
     const path = location.pathname.split("/")[1];
-    if (path === "dashboard") return "Dashboard";
-    if (path === "arjuna") return "Arjuna";
-    if (path === "meetingroom") return "Meeting Room";
-    if (path === "play-hard") return "Play Hard";
-    if (path === "command-center") return "Command Center";
-    if (path === "co-working") return "Co-Working Space";
-    if (path === "offices") return "Offices";
-    if (path === "users") return "Users";
-    if (path === "form-offices") return "Form Offices";
+    if (path.toLowerCase().includes("beranda")) return "Beranda";
+    if (path.toLowerCase().includes("arjuna")) return "Arjuna";
+    if (path.toLowerCase().includes("meetingroom")) return "Meeting Room";
+    if (path.toLowerCase().includes("play-hard")) return "Play Hard";
+    if (path.toLowerCase().includes("command-center")) return "Command Center";
+    if (path.toLowerCase().includes("co-working")) return "Co-Working Space";
+    if (path.toLowerCase().includes("gedung")) return "Gedung";
+    if (path.toLowerCase().includes("users")) return "Users";
+    if (path.toLowerCase().includes("form-offices")) return "Form Offices";
   }, [location]);
 
   return (

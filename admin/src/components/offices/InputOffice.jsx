@@ -22,6 +22,7 @@ const InputOffice = () => {
   const [price, setPrice] = useState(0);
   const [catatan, setCatatan] = useState("");
   const [fasilitas, setFasilitas] = useState("");
+  const [isPaidOffice, setIsPaidOffice] = useState(false);
   const navigate = useNavigate();
 
   const notify = (message) => {
@@ -47,6 +48,7 @@ const InputOffice = () => {
       setPrice(data.price);
       setCatatan(data.catatan);
       setFasilitas(data.fasilitas);
+      setIsPaidOffice(data.paidOffice);
     });
   }, [id]);
 
@@ -63,6 +65,7 @@ const InputOffice = () => {
       maxGuest: maxGuest,
       catatan: catatan,
       fasilitas: fasilitas,
+      paidOffice: isPaidOffice,
       price: price,
     },
     // ======== SUBMIT DATA ===========
@@ -166,6 +169,15 @@ const InputOffice = () => {
           }}
           value={catatan}
         />
+        <h2 className="text-2xl py-4">Penyewaan Berbayar ?</h2>
+        <div>
+          <input
+            type="checkbox"
+            checked={isPaidOffice}
+            onChange={(e) => setIsPaidOffice(e.target.checked)}
+            className="checkbox checkbox-md"
+          />
+        </div>
         <h2 className="text-2xl pt-4">Jam Buka & Jam Tutup</h2>
 
         <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
@@ -211,6 +223,7 @@ const InputOffice = () => {
               value={maxGuest}
             />
           </div>
+
           <div>
             <h3 className="mt-2 -mb-1">Harga Sewa</h3>
             <input

@@ -73,3 +73,34 @@ export const getAllUsers = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const deleteUser = async (req, res) => {
+  try {
+    await User.deleteOne({ _id: req.params.id });
+    res.status(200).json(`Behasil menghapus user ${req.params.id}`);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const editUser = async (req, res) => {
+  try {
+    const editedUser = await User.updateOne(
+      { _id: req.params.id },
+      { $set: req.body }
+    );
+    res.status(200).json(editedUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const getUserById = async (req, res) => {
+  try {
+    const userData = await User.findById(req.params.id);
+
+    res.json({ name: userData.name, email: userData.email });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};

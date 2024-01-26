@@ -38,6 +38,7 @@ export const editOffice = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
 export const deleteOffice = async (req, res) => {
   try {
     const deletedOffice = await Office.deleteOne({ _id: req.params.id });

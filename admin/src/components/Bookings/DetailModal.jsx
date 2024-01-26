@@ -80,12 +80,6 @@ const DetailModal = ({ setIdSelected }) => {
                 </tr>
               </thead>
             </table>
-          </div>
-          <div
-            className={` grid grid-cols-2 gap-3 ${
-              path === "arjuna" ? "hidden" : ""
-            }`}
-          >
             <tr>
               <td>Sasaran Kegiatan</td>
               <td className="px-3">:</td>
@@ -101,6 +95,12 @@ const DetailModal = ({ setIdSelected }) => {
                 />
               ) : null}
             </section>
+          </div>
+          <div
+            className={` grid grid-cols-2 gap-3 ${
+              path.toLowerCase().includes("arjuna") ? "hidden" : ""
+            }`}
+          >
             <section className="flex text-center flex-col gap-3">
               <span className="font-semibold  py-2">Poster Kegiatan</span>
               {dataDetailSelected?.posterKegiatan ? (

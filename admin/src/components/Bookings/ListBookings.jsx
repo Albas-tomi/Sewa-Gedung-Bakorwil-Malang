@@ -117,10 +117,18 @@ const ListBookings = () => {
                     .filter((data) => data._id === id)
                     .map((data) => data.title)}
                 </td>
-                <td className={path === "arjuna" ? "hidden" : ""}>
+                <td
+                  className={
+                    path.toLowerCase().includes("arjuna") ? "hidden" : ""
+                  }
+                >
                   {data.lembaga}
                 </td>
-                <td className={path !== "arjuna" ? "hidden" : ""}>
+                <td
+                  className={
+                    path.toLowerCase().includes("arjuna") ? "" : "hidden"
+                  }
+                >
                   {formatRupiah(data.jenisPembayaran)}
                 </td>
                 <td>

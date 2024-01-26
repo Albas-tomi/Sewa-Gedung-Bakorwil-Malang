@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 import UserContextProvider from "./components/UserContext";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
-import TodoList from "./todoList/TodoList";
 import DetailOffice from "./pages/DetailOffice";
 import MyBooking from "./pages/MyBooking";
 import DetailBooking from "./pages/DetailBooking";
@@ -26,9 +25,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/todo" element={<TodoList />} />
           <Route path="/pesanan-saya" element={<MyBooking />} />
-          <Route path="/mybooking/:id" element={<DetailBooking />} />
+          <Route path="/pesanan-saya/:id" element={<DetailBooking />} />
           <Route path="/office/:id" element={<DetailOffice />} />
           <Route path="/kontak-kami" element={<ContactUs />} />
           <Route path="/tentang-kami" element={<AboutUs />} />

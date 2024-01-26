@@ -65,7 +65,7 @@ const ModalBooking = ({ booking }) => {
       if (booking.price === 0) {
         dispatch(createBooking(booking));
         sendEmail();
-        navigate("/mybooking");
+        navigate("/pesanan-saya");
       } else {
         document.getElementById("modal_payment").close();
         const config = {

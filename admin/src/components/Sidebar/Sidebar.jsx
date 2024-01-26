@@ -36,7 +36,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <NavLink to={"/dashboard"}>
+      <NavLink to={"/beranda"}>
         {({ isActive }) => (
           <ul
             className={`${
@@ -56,14 +56,14 @@ const Sidebar = () => {
                   !display && "hidden w-0"
                 } text-start font-medium pl-8 w-full text-sm`}
               >
-                Dashboard
+                Beranda
               </span>
             </li>
           </ul>
         )}
       </NavLink>
 
-      <NavLink to={"/offices"}>
+      <NavLink to={"/gedung"}>
         {({ isActive }) => (
           <ul
             className={`${
@@ -83,7 +83,7 @@ const Sidebar = () => {
                   !display && "hidden w-0"
                 } text-start font-medium pl-8 w-full text-sm`}
               >
-                Offices
+                Gedung
               </span>
             </li>
           </ul>

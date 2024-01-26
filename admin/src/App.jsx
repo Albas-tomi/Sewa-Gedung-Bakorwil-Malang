@@ -39,12 +39,12 @@ function App() {
           >
             <Route path="/register" element={<Register />} />
             <Route path="/arjuna/:id" element={<Bookings />} />
-            <Route path="/dashboard" element={<Home />} />
+            <Route path="/beranda" element={<Home />} />
             <Route path="/meetingroom/:id" element={<Bookings />} />
             <Route path="/play-hard/:id" element={<Bookings />} />
             <Route path="/command-center/:id" element={<Bookings />} />
             <Route path="/co-working/:id" element={<Bookings />} />
-            <Route path="/offices" element={<Offices />} />
+            <Route path="/gedung" element={<Offices />} />
             <Route path="/form-offices" element={<FormOffices />} />
             <Route path="/form-offices/:id" element={<FormOffices />} />
             <Route path="/users" element={<Users />} />

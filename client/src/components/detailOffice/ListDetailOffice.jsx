@@ -22,9 +22,11 @@ const ListDetailOffice = () => {
 
   return (
     <div className="mt-4 md:mx-3 bg-gray-100 -mx-8 px-8 py-8">
-      <h1 className="text-3xl">{office.title}</h1>
-      <a className="my-2 block font-semibold underline">{office.address}</a>
       <div className="relative">
+        <h1 className="text-3xl font-semibold">{office.title}</h1>
+        <a className="my-2 block font-semibold text-gray-500">
+          {office.extraInfo}
+        </a>
         <GalleryOffice office={office} />
         <div className="grid mt-8 gap-8 grid-cols-1">
           <div>

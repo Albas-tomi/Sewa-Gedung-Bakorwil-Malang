@@ -57,7 +57,7 @@ const ModalConfirm = ({ booking }) => {
   const handleCreatePermohonan = () => {
     dispatch(createBooking(booking));
     sendEmail();
-    navigate("/mybooking");
+    navigate("/pesanan-saya");
   };
 
   return (

@@ -52,7 +52,15 @@ const ListBookings = () => {
                   ""}
               </td>
               <td>{data.lembaga}</td>
-              <td>Terima/Tolak</td>
+              <td className="text-center flex justify-center">
+                {data.statusDiterima === false ? (
+                  <p className="font-medium text-base">Ditolak</p>
+                ) : data.statusDiterima === true ? (
+                  <p className="font-medium text-base">Diterima</p>
+                ) : (
+                  "DITOLAK"
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

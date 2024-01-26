@@ -4,7 +4,7 @@ import LoginInput from "../components/login/LoginInput";
 const LoginPage = () => {
   return (
     <div>
-      <div className="grow flex-col gap-4 px-3 flex justify-around items-center">
+      <div className="grow flex-col my-28 gap-4 px-3 flex justify-around items-center">
         <h1 className="mb-4 text-4xl text-center">Login</h1>
         <LoginInput />
       </div>
